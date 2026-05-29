@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>زرین گالری | طلای اصیل ایرانی | Zarrin Gallery</title>
+  <meta name="description" content="زرین گالری - طراحی و ساخت لوکس‌ترین زیورآلات طلای ۱۸ عیار ایرانی با ترکیب هنر اصیل ملی و تکنولوژی سه‌بعدی مدرن.">
+  
+  <!-- CDNs for Immersive Web Experience -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%230A0806'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23C9912A' stroke-width='3'/%3E%3Cpath d='M32 18 L36 28 L46 28 L38 34 L41 44 L32 38 L23 44 L26 34 L18 28 L28 28 Z' fill='%23FAF6F0'/%3E%3C/svg%3E">
+
+  <style>
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       DESIGN SYSTEM & COLOR TOKENS
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    :root {
+      /* Base — Deep luxury darks */
+      --obsidian:      #0A0806;   /* Deepest background */
+      --charcoal:      #141210;   /* Section backgrounds */
+      --dark-brown:    #1C1812;   /* Card backgrounds */
+      --warm-black:    #221E18;   /* Hover states */
+
+      /* Gold Spectrum — Core identity */
+      --gold-pale:     #F5E6C8;   /* Softest gold, text on dark */
+      --gold-cream:    #EDD59A;   /* Cream gold, subheadings */
+      --gold-light:    #D4A853;   /* Light gold, secondary accents */
+      --gold-primary:  #C9912A;   /* TRUE GOLD — primary brand color */
+      --gold-deep:     #A6741A;   /* Deep gold, borders */
+      --gold-antique:  #8B5E0F;   /* Antique gold, shadows */
+      --gold-shadow:   #6B4810;   /* Darkest gold, depth */
+
+      /* Contrast & Text */
+      --ivory:         #FAF6F0;   /* Primary text on dark */
+      --parchment:     #E8DDD0;   /* Secondary text */
+      --muted:         #8A7A6A;   /* Tertiary text, captions */
+      --separator:     rgba(201, 145, 42, 0.15);  /* Dividers */
+
+      /* Glows & Blurs */
+      --gold-glow:     rgba(201, 145, 42, 0.6);
+      --gold-glow-sm:  rgba(201, 145, 42, 0.25);
+      --shimmer-1:     rgba(245, 230, 200, 0.8);
+      --shimmer-2:     rgba(212, 168, 83, 0.4);
+
+      /* Typography fonts */
+      --font-display:  'Cinzel Decorative', serif;
+      --font-heading:  'Playfair Display', serif;
+      --font-serif:    'Cormorant Garamond', serif;
+      --font-persian:  'Vazirmatn', sans-serif;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       RESET & BASE RESETS
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    html {
+      scroll-behavior: auto;
+      background: var(--obsidian);
+      overflow-x: hidden;
+      direction: rtl;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-deep) var(--charcoal);
+    }
+
+    body {
+      color: var(--ivory);
+      font-family: var(--font-persian);
+      font-weight: 300;
+      background: linear-gradient(180deg, #0A0806 0%, #0F0D0A 40%, #0A0806 100%);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Custom thin premium scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--obsidian);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold-deep);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-primary);
+    }
+
+    ::selection {
+      background: var(--gold-primary);
+      color: var(--obsidian);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+
+    /* Skip Navigation */
+    .skip-nav {
+      position: fixed;
+      top: -100px;
+      right: 20px;
+      background: var(--gold-primary);
+      color: var(--obsidian);
+      padding: 10px 20px;
+      z-index: 9999;
+      font-weight: 600;
+      transition: top 0.3s ease;
+    }
+    .skip-nav:focus {
+      top: 20px;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       CUSTOM CURSOR PHYSICS
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .cursor-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--gold-primary);
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      display: none;
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--gold-primary);
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+      display: none;
+    }
+    .cursor-ring::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 1px dashed rgba(201, 145, 42, 0.2);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+    }
+    
+    /* Cursor interactive states */
+    body.is-hovering .cursor-dot {
+      transform: translate(-50%, -50%) scale(0);
+    }
+    body.is-hovering .cursor-ring {
+      width: 58px;
+      height: 58px;
+      background: rgba(201, 145, 42, 0.1);
+      border-color: var(--gold-pale);
+    }
+    body.is-dragging .cursor-ring::after {
+      opacity: 1;
+      transform: scale(1);
+      animation: rotateRing 8s linear infinite;
+    }
+
+    @keyframes rotateRing {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       INTRO LOADING CURTAIN
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .loader-curtain {
+      position: fixed;
+      inset: 0;
+      background: var(--obsidian);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+    .loader-logo-wrap {
+      width: 240px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .loader-svg {
+      width: 100%;
+      fill: none;
+      stroke: var(--gold-primary);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .loader-svg path {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: drawLogo 3.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    .loader-tagline {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      color: var(--gold-cream);
+      letter-spacing: 0.12em;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      font-family: var(--font-persian);
+      font-weight: 200;
+    }
+    .loader-curtain.loaded {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes drawLogo {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       STICKY NAVIGATION BAR
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .header-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: clamp(20px, 6vw, 86px);
+      z-index: 999;
+      background: rgba(10, 8, 6, 0);
+      border-bottom: 1px solid rgba(201, 145, 42, 0);
+      transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                  backdrop-filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                  border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .header-nav.scrolled {
+      height: 76px;
+      background: rgba(10, 8, 6, 0.82);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-color: var(--separator);
+    }
+    
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .logo-en {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--gold-pale), var(--gold-primary), var(--gold-deep));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .logo-fa {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+      align-self: stretch;
+      text-align: left;
+    }
+
+    .nav-menu-links {
+      display: flex;
+      gap: clamp(20px, 3.2vw, 48px);
+      list-style: none;
+    }
+    .nav-item a {
+      font-size: 0.92rem;
+      color: var(--parchment);
+      font-weight: 400;
+      position: relative;
+      padding-block: 8px;
+    }
+    .nav-item a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gold-primary);
+      transition: width 0.3s ease, right 0.3s ease;
+    }
+    .nav-item a:hover {
+      color: var(--gold-primary);
+    }
+    .nav-item a:hover::after {
+      width: 100%;
+      right: 0;
+    }
+
+    .nav-cta-btn {
+      border: 1px solid var(--gold-primary);
+      padding: 10px 26px;
+      font-size: 0.88rem;
+      color: var(--gold-pale);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      font-weight: 500;
+      transition: color 0.4s ease;
+    }
+    .nav-cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gold-primary);
+      z-index: -1;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-cta-btn:hover {
+      color: var(--obsidian);
+    }
+    .nav-cta-btn:hover::before {
+      left: 0;
+    }
+
+    /* Mobile Hamburger */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .menu-toggle span {
+      width: 28px;
+      height: 1.5px;
+      background: var(--gold-primary);
+      transition: all 0.3s ease;
+    }
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--obsidian);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-overlay a {
+      font-size: 1.5rem;
+      color: var(--parchment);
+      font-family: var(--font-persian);
+    }
+    .mobile-overlay a:hover {
+      color: var(--gold-primary);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SECTION 1 — HERO: "دروازه طلا"
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .section-hero {
+      position: relative;
+      height: 100vh; /* Exactly one screen high — zero empty scroll gaps */
+      z-index: 1;
+    }
+    .hero-canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .hero-three-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hero-text-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 10;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.8rem, 8.8vw, 8rem);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold-cream) 35%, var(--gold-primary) 70%, var(--gold-deep) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      will-change: transform, opacity;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    .hero-subtitle {
+      font-family: var(--font-persian);
+      font-weight: 300;
+      font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+      color: var(--gold-cream);
+      margin-bottom: 4px;
+      will-change: transform, opacity;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    .hero-tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      will-change: transform, opacity;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    .hero-divider {
+      width: 0px;
+      height: 1px;
+      background: var(--gold-primary);
+      margin-block: 22px;
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+    .hero-cta {
+      pointer-events: auto;
+      border: 1px solid var(--gold-primary);
+      padding: 12px 36px;
+      font-size: 0.95rem;
+      color: var(--obsidian);
+      background: var(--gold-primary);
+      font-weight: 500;
+      cursor: pointer;
+      will-change: transform, opacity;
+      transform: translateY(30px);
+      opacity: 0;
+      box-shadow: 0 4px 20px rgba(201, 145, 42, 0.35);
+      transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .hero-cta:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      box-shadow: 0 6px 28px rgba(201, 145, 42, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.8s ease 2.8s;
+    }
+    .hero-scroll-text {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: var(--font-persian);
+      letter-spacing: 0.08em;
+    }
+    .hero-scroll-chevron {
+      width: 14px;
+      height: 24px;
+      border: 1px solid var(--gold-primary);
+      border-radius: 12px;
+      position: relative;
+    }
+    .hero-scroll-chevron::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      background: var(--gold-primary);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: bounceDot 1.8s infinite;
+    }
+
+    @keyframes bounceDot {
+      0% { top: 4px; opacity: 1; }
+      80% { top: 14px; opacity: 0; }
+      100% { top: 4px; opacity: 0; }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SECTION 2 — STORY: "میراث ما"
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .section-story {
+      position: relative;
+      background: var(--charcoal);
+      padding-block: 15vh;
+      min-height: 150vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    /* Subtly animated noise background overlay */
+    .section-story::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(201, 145, 42, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .story-grid {
+      max-width: 1320px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 6vw, 86px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(40px, 8vw, 120px);
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Visual Left */
+    .story-visual-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .story-canvas-box {
+      width: min(100%, 460px);
+      height: 600px;
+      border: 1px solid var(--separator);
+      background: rgba(10, 8, 6, 0.6);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+      perspective: 1200px; /* enable 3D space */
+    }
+    
+    .story-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), 
+                  transform 1.0s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 1;
+    }
+    
+    .story-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: rotateY(0deg) scale(1) translateZ(0);
+      z-index: 2;
+    }
+
+    /* 3D circular sweep states */
+    .story-slide.next-slide {
+      transform: rotateY(90deg) scale(0.85) translateZ(100px);
+    }
+    .story-slide.prev-slide {
+      transform: rotateY(-90deg) scale(0.85) translateZ(100px);
+    }
+
+    .story-slide-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 6s ease;
+    }
+    
+    .story-slide.active .story-slide-img {
+      transform: scale(1.06); /* subtle Ken Burns effect */
+    }
+
+    .story-slide-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 24px 24px;
+      background: linear-gradient(0deg, rgba(10,8,6,0.95) 0%, rgba(10,8,6,0.7) 60%, transparent 100%);
+      font-size: 1.02rem;
+      font-family: var(--font-persian);
+      font-weight: 300;
+      color: var(--gold-pale);
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.3s;
+    }
+
+    .story-slide.active .story-slide-caption {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Slider Nav Overlay */
+    .story-slider-nav {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: 24px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .story-slider-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--separator);
+      background: rgba(10, 8, 6, 0.65);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      color: var(--gold-pale);
+      font-size: 1.1rem;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.3s ease;
+    }
+    .story-slider-btn:hover {
+      border-color: var(--gold-primary);
+      background: var(--gold-primary);
+      color: var(--obsidian);
+      box-shadow: 0 0 15px var(--gold-glow-sm);
+    }
+
+    .story-slider-dots {
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .story-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .story-dot.active {
+      background: var(--gold-primary);
+      transform: scale(1.3);
+      box-shadow: 0 0 8px var(--gold-primary);
+    }
+    
+    /* Stats counter overlay below bracelet */
+    .story-counters {
+      display: flex;
+      justify-content: space-around;
+      width: min(100%, 460px);
+      margin-top: 36px;
+      border-top: 1px solid var(--separator);
+      padding-top: 24px;
+      gap: 16px;
+    }
+    .counter-item {
+      text-align: center;
+    }
+    .counter-number {
+      font-family: var(--font-heading);
+      font-size: 2.3rem;
+      font-weight: 500;
+      color: var(--gold-primary);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .counter-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--font-persian);
+    }
+
+    /* Text Right */
+    .story-content-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .story-accent-title {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(3.8rem, 6vw, 5.5rem);
+      line-height: 1;
+      background: linear-gradient(90deg, var(--gold-primary), var(--gold-pale));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .story-section-title {
+      font-family: var(--font-persian);
+      font-size: clamp(2rem, 3.2vw, 2.6rem);
+      font-weight: 200;
+      color: var(--gold-cream);
+      margin-bottom: 36px;
+    }
+    .story-paragraph {
+      color: var(--parchment);
+      font-size: 1.05rem;
+      line-height: 2.2;
+      margin-bottom: 24px;
+      text-align: justify;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    
+    .story-quote-card {
+      border-right: 3px solid var(--gold-primary);
+      padding-right: 24px;
+      margin-block: 36px 28px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .story-quote-text {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--gold-pale);
+      line-height: 1.8;
+    }
+    .story-quote-author {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+      font-family: var(--font-persian);
+    }
+    
+    .story-more-link {
+      font-size: 0.95rem;
+      color: var(--gold-primary);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      padding-bottom: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .story-more-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold-primary);
+      transition: width 0.3s ease;
+    }
+    .story-more-link:hover::after {
+      width: 100%;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SECTION 3 — COLLECTION: "مجموعه طلا"
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .section-collection {
+      position: relative;
+      height: 100vh; /* Changed from 300vh to 100vh to prevent double gap */
+      background: var(--obsidian);
+      z-index: 1;
+    }
+    
+    .collection-canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 2; /* Render on top of pinned section background */
+      pointer-events: auto;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .collection-slides-wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      perspective: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--obsidian);
+    }
+    .col-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(1.06) translateZ(-60px);
+      transition: opacity 1.0s cubic-bezier(0.25, 1, 0.5, 1), 
+                  transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .col-slide.active {
+      opacity: 1;
+      transform: scale(1) translateZ(0);
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .col-slide-img {
+      width: min(90%, 540px);
+      aspect-ratio: 1;
+      object-fit: contain;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(201, 145, 42, 0.25);
+      border-radius: 4px;
+      background: radial-gradient(circle at center, rgba(20, 18, 16, 0.95) 0%, rgba(10, 8, 6, 1) 100%);
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+      will-change: transform;
+    }
+
+    /* Fixed top left collection title */
+    .collection-fixed-title {
+      position: fixed;
+      top: 130px;
+      right: clamp(20px, 6vw, 86px);
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .collection-title-en {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      letter-spacing: 0.12em;
+      color: rgba(245, 230, 200, 0.12);
+      line-height: 1;
+    }
+    .collection-title-fa {
+      font-family: var(--font-persian);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--gold-cream);
+    }
+
+    /* Overlay Product HUD Card (Right side) */
+    .collection-hud-card {
+      position: fixed;
+      top: 50%;
+      right: clamp(20px, 6vw, 86px);
+      transform: translateY(-50%);
+      width: clamp(310px, 32vw, 420px);
+      z-index: 20;
+      padding: 38px;
+      background: rgba(20, 18, 16, 0.72);
+      border: 1px solid var(--separator);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      will-change: transform, opacity;
+      opacity: 0;
+      transform: translateY(-40%);
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .collection-hud-card.active {
+      opacity: 1;
+      transform: translateY(-50%);
+      pointer-events: auto;
+    }
+
+    /* Overlay Product HUD Card (Left side) */
+    .collection-hud-card-left {
+      position: fixed;
+      top: 50%;
+      left: clamp(20px, 6vw, 86px);
+      transform: translateY(-50%);
+      width: clamp(280px, 28vw, 360px);
+      z-index: 20;
+      padding: 30px;
+      background: rgba(10, 8, 6, 0.8);
+      border: 1px solid var(--separator);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      will-change: transform, opacity;
+      opacity: 0;
+      transform: translateY(-40%);
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.1s, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
+    }
+    .collection-hud-card-left.active {
+      opacity: 1;
+      transform: translateY(-50%);
+      pointer-events: auto;
+    }
+    .left-hud-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      background: rgba(76, 175, 80, 0.15);
+      color: #81C784;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      width: fit-content;
+      margin-bottom: 5px;
+    }
+    .left-hud-title {
+      font-family: var(--font-persian);
+      color: var(--gold-cream);
+      font-size: 1.1rem;
+      border-bottom: 1px dashed var(--separator);
+      padding-bottom: 10px;
+      margin-bottom: 5px;
+    }
+    .left-hud-list {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--parchment);
+      line-height: 1.8;
+    }
+    .left-hud-list li {
+      position: relative;
+      padding-right: 15px;
+      margin-bottom: 8px;
+    }
+    .left-hud-list li::before {
+      content: '▸';
+      position: absolute;
+      right: 0;
+      color: var(--gold-primary);
+    }
+    .left-hud-btn {
+      margin-top: 10px;
+      padding: 10px;
+      text-align: center;
+      background: transparent;
+      color: var(--gold-primary);
+      border: 1px solid var(--gold-primary);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: block;
+    }
+    .left-hud-btn:hover {
+      background: var(--gold-primary);
+      color: var(--obsidian);
+    }
+
+    .hud-cat {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--gold-primary);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .hud-name {
+      font-family: var(--font-persian);
+      font-size: 2.1rem;
+      font-weight: 200;
+      color: var(--ivory);
+      line-height: 1.3;
+    }
+    .hud-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--separator);
+    }
+    .hud-spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hud-spec-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .hud-weight-val {
+      font-size: 1rem;
+      color: var(--gold-cream);
+      font-weight: 400;
+    }
+    .hud-price-val {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+    .hud-desc {
+      font-size: 0.95rem;
+      color: var(--parchment);
+      line-height: 1.9;
+    }
+    .hud-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .hud-buy-btn {
+      background: var(--gold-primary);
+      color: var(--obsidian);
+      padding-block: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.3s;
+      box-shadow: 0 4px 15px rgba(201, 145, 42, 0.25);
+    }
+    .hud-buy-btn:hover {
+      background: var(--gold-light);
+    }
+    .hud-info-btn {
+      border: 1px solid var(--separator);
+      color: var(--parchment);
+      padding-block: 12px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .hud-info-btn:hover {
+      border-color: var(--gold-primary);
+      background: rgba(201,145,42,0.05);
+    }
+
+    /* Swipe indicators left of HUD card */
+    .collection-dots {
+      position: absolute;
+      left: -48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .col-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .col-dot.active {
+      background: var(--gold-primary);
+      transform: scale(1.4);
+      box-shadow: 0 0 10px var(--gold-primary);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SECTION 4 — SERVICES: "خدمات ما"
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .section-services {
+      background: var(--dark-brown);
+      padding-block: 16vh 14vh;
+      position: relative;
+      z-index: 5;
+      /* Diagonal cut on top edge */
+      clip-path: polygon(0 0, 100% 6vh, 100% 100%, 0 100%);
+      margin-top: -6vh;
+    }
+    
+    /* Subtle shining gold border simulation on diagonal edge */
+    .section-services::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6.5vh;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+      opacity: 0.45;
+      clip-path: polygon(0 0, 100% 6vh, 100% calc(6vh + 2px), 0 2px);
+      pointer-events: none;
+      animation: borderShimmer 4s ease infinite;
+    }
+
+    @keyframes borderShimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    .services-inner {
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 6vw, 86px);
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+
+    .section-header-wrap {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-en-title {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, var(--gold-pale), var(--gold-cream));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .header-fa-title {
+      font-family: var(--font-persian);
+      font-size: 1.85rem;
+      font-weight: 300;
+      color: var(--gold-cream);
+    }
+    .header-underline {
+      width: 70px;
+      height: 1px;
+      background: var(--gold-primary);
+      margin-top: 18px;
+      box-shadow: 0 0 8px var(--gold-glow);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+    }
+    
+    .service-card {
+      background: rgba(255, 255, 255, 0.016);
+      border: 1px solid var(--separator);
+      padding: 38px 32px;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(201, 145, 42, 0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold-primary);
+      background: rgba(251, 248, 243, 0.024);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 145, 42, 0.05);
+    }
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon-svg {
+      width: 44px;
+      height: 44px;
+      stroke: var(--gold-primary);
+      stroke-width: 1.2px;
+      fill: none;
+      transition: transform 0.4s ease;
+    }
+    .service-card:hover .service-icon-svg {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .service-title {
+      font-size: 1.32rem;
+      color: var(--gold-cream);
+      font-weight: 500;
+    }
+    .service-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.95;
+    }
+    .service-link {
+      font-size: 0.82rem;
+      color: var(--gold-primary);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    /* Bottom Trust Bar */
+    .trust-stat-bar {
+      margin-top: 36px;
+      background: rgba(10, 8, 6, 0.45);
+      border: 1px solid var(--separator);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 34px;
+      text-align: center;
+      gap: 20px;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--separator);
+    }
+    .stat-title {
+      font-size: 1.15rem;
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+    .stat-subtitle {
+      font-size: 0.88rem;
+      color: var(--parchment);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SECTION 5 — CONTACT: "تماس با ما"
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .section-contact {
+      background: var(--obsidian);
+      padding-block: 14vh 40px;
+      position: relative;
+      z-index: 5;
+    }
+    
+    /* Top Full Width Divider with Shimmer sweep */
+    .contact-top-divider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        rgba(201, 145, 42, 0) 0%, 
+        rgba(201, 145, 42, 0.8) 50%, 
+        rgba(201, 145, 42, 0) 100%);
+      background-size: 200% auto;
+      animation: shimmerSweep 4s linear infinite;
+    }
+
+    @keyframes shimmerSweep {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .contact-grid {
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 6vw, 86px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 96px);
+      width: 100%;
+    }
+
+    /* Right Column: Details */
+    .contact-info-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+    }
+    .contact-logo {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      background: linear-gradient(135deg, var(--gold-pale), var(--gold-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .contact-tagline {
+      font-size: 0.98rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: -12px;
+    }
+    
+    .contact-details-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      margin-top: 14px;
+    }
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .detail-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--separator);
+      background: rgba(255, 255, 255, 0.01);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .detail-icon-svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gold-primary);
+      stroke-width: 1.5;
+      fill: none;
+    }
+    .detail-texts {
+      display: flex;
+      flex-direction: column;
+    }
+    .detail-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .detail-value {
+      font-size: 0.98rem;
+      color: var(--parchment);
+      line-height: 1.7;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--separator);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .social-btn:hover {
+      border-color: var(--gold-primary);
+      background: rgba(201, 145, 42, 0.08);
+      transform: translateY(-3px);
+    }
+    .social-icon-svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--gold-pale);
+    }
+    
+    /* Left Column: Form */
+    .contact-form-col {
+      background: rgba(20, 18, 16, 0.4);
+      border: 1px solid var(--separator);
+      padding: clamp(24px, 4vw, 48px);
+      border-radius: 4px;
+    }
+    .form-title {
+      font-size: 1.6rem;
+      color: var(--gold-cream);
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+    .gold-form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .input-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(201, 145, 42, 0.25);
+      border-radius: 2px;
+      color: var(--ivory);
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-family: var(--font-persian);
+      text-align: right;
+      transition: all 0.3s ease;
+    }
+    .form-select option {
+      background: var(--obsidian);
+      color: var(--ivory);
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 12px var(--gold-glow-sm);
+    }
+    
+    .form-submit-btn {
+      width: 100%;
+      background: var(--gold-primary);
+      color: var(--obsidian);
+      padding: 16px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.3s, transform 0.1s;
+      box-shadow: 0 6px 20px rgba(201, 145, 42, 0.25);
+      text-align: center;
+      margin-top: 8px;
+    }
+    .form-submit-btn:hover {
+      background: var(--gold-light);
+    }
+    .form-submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Footer strip */
+    .footer-strip {
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 6vw, 86px);
+      margin-top: 100px;
+      border-top: 1px solid var(--separator);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a:hover {
+      color: var(--gold-primary);
+    }
+
+    /* Floating Whatsapp bubble */
+    .whatsapp-bubble {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 998;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: transparent;
+      border-radius: 30px;
+      padding: 4px;
+      cursor: pointer;
+      pointer-events: auto;
+      overflow: hidden;
+      max-width: 54px;
+      height: 54px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--separator);
+      background: var(--obsidian);
+      transition: max-width 0.4s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+    .whatsapp-bubble:hover {
+      max-width: 200px;
+      border-color: var(--gold-primary);
+    }
+    .whatsapp-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .whatsapp-bubble:hover .whatsapp-icon-wrap {
+      background: var(--gold-light);
+    }
+    .whatsapp-icon-svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--obsidian);
+    }
+    .whatsapp-text {
+      font-size: 0.8rem;
+      color: var(--gold-pale);
+      white-space: nowrap;
+      padding-inline: 14px 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease 0.1s;
+      font-weight: 500;
+    }
+    .whatsapp-bubble:hover .whatsapp-text {
+      opacity: 1;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       RESPONSIVE DESIGN BREAKPOINTS
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    @media (max-width: 960px) {
+      .header-nav {
+        padding-inline: 24px;
+      }
+      .nav-menu-links, .nav-cta-btn {
+        display: none;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 58px;
+        padding-inline: 24px;
+      }
+      .story-canvas-box {
+        height: 500px;
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        padding-inline: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 4rem;
+        letter-spacing: 0.08em;
+      }
+      .section-services {
+        padding-block: 12vh 8vh;
+      }
+      .services-inner {
+        padding-inline: 24px;
+      }
+      .trust-stat-bar {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+      .stat-item:not(:last-child)::after {
+        display: none;
+      }
+      .footer-strip {
+        padding-inline: 24px;
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 3.2rem;
+      }
+      .loader-logo-wrap {
+        width: 180px;
+      }
+      .story-canvas-box {
+        height: 400px;
+      }
+      .story-counters {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Reader Link -->
+  <a class="skip-nav" href="#main-content">پرش به محتوای اصلی</a>
+
+  <!-- Immersive Cursor (Dual trailing) -->
+  <div class="cursor-dot" id="custom-cursor-dot"></div>
+  <div class="cursor-ring" id="custom-cursor-ring"></div>
+
+  <!-- Loading curtain -->
+  <div class="loader-curtain" id="page-loader">
+    <div class="loader-logo-wrap">
+      <!-- Luxury stylized calligraphy SVG "ZARRIN" -->
+      <svg class="loader-svg" viewBox="0 0 320 80">
+        <path d="M20 50 C20 30, 45 20, 60 20 C75 20, 85 32, 85 45 C85 62, 60 70, 40 70 M52 45 L92 45 M112 25 L124 68 M144 25 L156 68 M132 45 L168 45 M188 25 C188 25, 218 20, 218 36 C218 52, 188 48, 208 68 M238 25 L238 68 L268 68 M288 25 L300 68" />
+      </svg>
+      <div class="loader-tagline" id="loader-subtitle">از معدن تا دست شما — طلای اصیل ایرانی</div>
+    </div>
+  </div>
+
+  <!-- Frosted Navigation -->
+  <nav class="header-nav" id="site-header" aria-label="منوی اصلی">
+    <a class="logo-container" href="#" aria-label="صفحه اصلی زرین گالری">
+      <span class="logo-en">ZARRIN</span>
+      <span class="logo-fa">زرین گالری</span>
+    </a>
+    
+    <ul class="nav-menu-links">
+      <li class="nav-item"><a href="#">خانه</a></li>
+      <li class="nav-item"><a href="#story">میراث ما</a></li>
+      <li class="nav-item"><a href="#collection">مجموعه</a></li>
+      <li class="nav-item"><a href="#services">خدمات</a></li>
+      <li class="nav-item"><a href="#contact">تماس با ما</a></li>
+    </ul>
+
+    <button class="nav-cta-btn" type="button" onclick="lenis.scrollTo('#contact')">مشاوره رایگان</button>
+
+    <!-- Mobile Hamburger Toggle -->
+    <div class="menu-toggle" id="hamburger-btn" aria-label="باز و بسته کردن منو" aria-expanded="false" role="button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" id="mobile-menu" aria-hidden="true">
+    <a href="#" onclick="toggleMobileMenu()">خانه</a>
+    <a href="#story" onclick="toggleMobileMenu()">میراث ما</a>
+    <a href="#collection" onclick="toggleMobileMenu()">مجموعه</a>
+    <a href="#services" onclick="toggleMobileMenu()">خدمات</a>
+    <a href="#contact" onclick="toggleMobileMenu()">تماس با ما</a>
+  </div>
+
+  <main id="main-content">
+    
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         SECTION 1 — HERO: "دروازه طلا"
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */ -->
+    <section class="section-hero" id="hero-section">
+      <!-- Fixed Three.js WebGL canvas -->
+      <div class="hero-canvas-container">
+        <canvas class="hero-three-canvas" id="canvas-hero" aria-label="نمایش سه‌بعدی تعاملی دروازه طلایی"></canvas>
+      </div>
+
+      <!-- Scrolling overlays -->
+      <div class="hero-text-overlay">
+        <h1 class="hero-title" id="h-title">ZARRIN</h1>
+        <h2 class="hero-subtitle" id="h-sub">گالری زیورآلات طلا</h2>
+        <p class="hero-tagline" id="h-tag">اصالت ایرانی | صنعتگری مدرن</p>
+        <div class="hero-divider" id="h-div"></div>
+        <button class="hero-cta" id="h-btn" type="button" onclick="lenis.scrollTo('#collection')">کشف مجموعه ←</button>
+      </div>
+
+
+      <!-- Scroll Indicator bottom -->
+      <div class="hero-scroll-cue" id="h-cue" onclick="lenis.scrollTo('#story')">
+        <span class="hero-scroll-text">برای کشف بیشتر اسکرول کنید</span>
+        <div class="hero-scroll-chevron"></div>
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         SECTION 2 — STORY: "میراث ما"
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */ -->
+    <section class="section-story" id="story">
+      <div class="story-grid">
+        
+        <!-- Left: Luxury 3D Circular Slideshow -->
+        <div class="story-visual-wrap">
+          <div class="story-canvas-box" id="story-slider-box">
+            
+            <div class="story-slide active">
+              <img class="story-slide-img" src="assets/images/story_craft.png" alt="هنر اصیل زرگری سنتی ایرانی">
+              <div class="story-slide-caption">اصالت نسل‌ها و هنر زرگری دستی</div>
+            </div>
+            <div class="story-slide next-slide">
+              <img class="story-slide-img" src="assets/images/story_design.png" alt="طراحی اختصاصی مدرن سه‌بعدی">
+              <div class="story-slide-caption">دمیدن روح مدرن با شبیه‌سازی سه‌بعدی</div>
+            </div>
+            <div class="story-slide">
+              <img class="story-slide-img" src="assets/images/story_showcase.png" alt="شاهکارهای نفیس عیارشده">
+              <div class="story-slide-caption">تعهد راسخ به کیفیت و اصالت شناسنامه‌دار</div>
+            </div>
+            <div class="story-slide prev-slide">
+              <img class="story-slide-img" src="assets/images/story_heritage.png" alt="انتقال میراث خانوادگی طلا">
+              <div class="story-slide-caption">انتقال یک میراث خانوادگی فراتر از زمان</div>
+            </div>
+
+            <!-- Slider controls overlay -->
+            <div class="story-slider-nav">
+              <button class="story-slider-btn prev" type="button" onclick="prevStorySlide()" aria-label="اسلاید قبلی">←</button>
+              <div class="story-slider-dots">
+                <span class="story-dot active" onclick="gotoStorySlide(0)"></span>
+                <span class="story-dot" onclick="gotoStorySlide(1)"></span>
+                <span class="story-dot" onclick="gotoStorySlide(2)"></span>
+                <span class="story-dot" onclick="gotoStorySlide(3)"></span>
+              </div>
+              <button class="story-slider-btn next" type="button" onclick="nextStorySlide()" aria-label="اسلاید بعدی">→</button>
+            </div>
+          </div>
+          
+          <div class="story-counters">
+            <div class="counter-item">
+              <span class="counter-number" data-target="14">۰</span>
+              <span class="counter-label">سال تجربه</span>
+            </div>
+            <div class="counter-item">
+              <span class="counter-number" data-target="8000" data-suffix="+">۰</span>
+              <span class="counter-label">مشتری وفادار</span>
+            </div>
+            <div class="counter-item">
+              <span class="counter-number" data-target="12000" data-suffix="+">۰</span>
+              <span class="counter-label">قطعه خلق‌شده</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Text narratives -->
+        <div class="story-content-wrap">
+          <span class="story-accent-title">Our Story</span>
+          <h2 class="story-section-title">داستان زرین؛ پیوند دیروز و امروز</h2>
+          
+          <p class="story-paragraph">تأسیس گالری زرین در سال ۱۳۸۹ توسط خانوادهای با نسلها سابقه طلاسازی، آغازی بر یک مأموریت هنری بود؛ دمیدن روحی مدرن در کالبد میراث کهن زرگری ایرانی.</p>
+          <p class="story-paragraph">ما در زرین بر این باوریم که طلا تنها یک شیء تزیینی گرانبها نیست، بلکه رسانه‌ای است برای بیان اصالت فردی و انتقال فرهنگ ارزشمند ایرانی از نسلی به نسل دیگر با زبان فرم‌های هندسی معاصر.</p>
+          
+          <div class="story-quote-card">
+            <p class="story-quote-text">«طلا آنجا که زیبایی آفرید، حقیقت هنر را به تماشا گذاشت.»</p>
+            <span class="story-quote-author">ـ حکمت کهن ایرانی</span>
+          </div>
+
+          <p class="story-paragraph">تعهد راسخ ما به اصالت عیار، کیفیت شناسنامه‌دار اسناد، و ارائه خدمات پس از فروش بی‌نظیر، زرین را به انتخابی ماندگار و فراتر از زمان تبدیل کرده است.</p>
+
+          <span class="story-more-link" onclick="lenis.scrollTo('#services')">بیشتر بدانید ←</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         SECTION 3 — COLLECTION: "مجموعه طلا"
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */ -->
+    <section class="section-collection" id="collection">
+      <!-- Fixed Collection Slides Container -->
+      <div class="collection-canvas-container">
+        <div class="collection-slides-wrap" id="col-slides-wrap">
+          <div class="col-slide active">
+            <img class="col-slide-img" src="assets/images/ring.png" alt="انگشتر الماس باغ ایران">
+          </div>
+          <div class="col-slide">
+            <img class="col-slide-img" src="assets/images/chain.png" alt="زنجیر مینی‌مال ابریشم">
+          </div>
+          <div class="col-slide">
+            <img class="col-slide-img" src="assets/images/bangle.png" alt="دستبند کوبیده زاگرس">
+          </div>
+          <div class="col-slide">
+            <img class="col-slide-img" src="assets/images/earring.png" alt="آویز اشک باران مهر">
+          </div>
+          <div class="col-slide">
+            <img class="col-slide-img" src="assets/images/necklace.png" alt="پلاک سیمرغ زرین">
+          </div>
+        </div>
+      </div>
+
+      <!-- Static Header overlay (only changes opacity on scroll) -->
+      <div class="collection-fixed-title" id="col-fixed-title">
+        <span class="collection-title-en">MUSEUM</span>
+        <span class="collection-title-fa">مجموعه برگزیده زرین</span>
+      </div>
+
+      <!-- Interactive HUD panel overlays (absolute scroll positions toggle these in script) -->
+      <div class="collection-hud-container">
+        <!-- Inside this container, cards will dynamically toggle class 'active' based on active product -->
+        <div class="collection-hud-card" id="hud-card-0">
+          <div class="collection-dots">
+            <span class="col-dot active" onclick="scrollToProduct(0)"></span>
+            <span class="col-dot" onclick="scrollToProduct(1)"></span>
+            <span class="col-dot" onclick="scrollToProduct(2)"></span>
+            <span class="col-dot" onclick="scrollToProduct(3)"></span>
+            <span class="col-dot" onclick="scrollToProduct(4)"></span>
+          </div>
+          <div>
+            <span class="hud-cat">RING / انگشتر ۱۸ عیار</span>
+            <h3 class="hud-name">انگشتر الماس باغ ایران</h3>
+          </div>
+          <div class="hud-divider"></div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">وزن تقریبی</div>
+            <div class="hud-weight-val">۵.۲ گرم</div>
+          </div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">شروع قیمت از</div>
+            <div class="hud-price-val" data-price="42500000">۴۲,۵۰۰,۰۰۰</div>
+          </div>
+          <p class="hud-desc">طراحی الهام گرفته از حوضچه‌های هندسی باغ شاهزاده کرمان؛ با نگین یاقوت سرخ مرکزی و الماس‌های ریز دورادور.</p>
+          <div class="hud-btns">
+            <button class="hud-buy-btn" type="button" onclick="lenis.scrollTo('#contact')">سفارش قطعه</button>
+            <button class="hud-info-btn" type="button">کاتالوگ فنی</button>
+          </div>
+        </div>
+
+        <div class="collection-hud-card" id="hud-card-1">
+          <div class="collection-dots">
+            <span class="col-dot" onclick="scrollToProduct(0)"></span>
+            <span class="col-dot active" onclick="scrollToProduct(1)"></span>
+            <span class="col-dot" onclick="scrollToProduct(2)"></span>
+            <span class="col-dot" onclick="scrollToProduct(3)"></span>
+            <span class="col-dot" onclick="scrollToProduct(4)"></span>
+          </div>
+          <div>
+            <span class="hud-cat">CHAIN / زنجیر ۱۸ عیار</span>
+            <h3 class="hud-name">زنجیر مینی‌مال ابریشم</h3>
+          </div>
+          <div class="hud-divider"></div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">وزن تقریبی</div>
+            <div class="hud-weight-val">۱۲.۸ گرم</div>
+          </div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">شروع قیمت از</div>
+            <div class="hud-price-val" data-price="89200000">۸۹,۲۰۰,۰۰۰</div>
+          </div>
+          <p class="hud-desc">زنجیر بافته شده به شیوه سنتی زنجیربافی یزدی، با پرداخت کاملاً مات و ظاهری شبیه به تارهای لطیف ابریشم خام.</p>
+          <div class="hud-btns">
+            <button class="hud-buy-btn" type="button" onclick="lenis.scrollTo('#contact')">سفارش قطعه</button>
+            <button class="hud-info-btn" type="button">کاتالوگ فنی</button>
+          </div>
+        </div>
+
+        <div class="collection-hud-card" id="hud-card-2">
+          <div class="collection-dots">
+            <span class="col-dot" onclick="scrollToProduct(0)"></span>
+            <span class="col-dot" onclick="scrollToProduct(1)"></span>
+            <span class="col-dot active" onclick="scrollToProduct(2)"></span>
+            <span class="col-dot" onclick="scrollToProduct(3)"></span>
+            <span class="col-dot" onclick="scrollToProduct(4)"></span>
+          </div>
+          <div>
+            <span class="hud-cat">BANGLE / النگو ۱۸ عیار</span>
+            <h3 class="hud-name">دستبند کوبیده زاگرس</h3>
+          </div>
+          <div class="hud-divider"></div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">وزن تقریبی</div>
+            <div class="hud-weight-val">۱۸.۵ گرم</div>
+          </div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">شروع قیمت از</div>
+            <div class="hud-price-val" data-price="132000000">۱۳۲,۰۰۰,۰۰۰</div>
+          </div>
+          <p class="hud-desc">النگوی پهن با بافت چکشی منحصربه‌فرد که یادآور صخره‌های پرصلابت رشته‌کوه زاگرس و طلوع طلایی آفتاب است.</p>
+          <div class="hud-btns">
+            <button class="hud-buy-btn" type="button" onclick="lenis.scrollTo('#contact')">سفارش قطعه</button>
+            <button class="hud-info-btn" type="button">کاتالوگ فنی</button>
+          </div>
+        </div>
+
+        <div class="collection-hud-card" id="hud-card-3">
+          <div class="collection-dots">
+            <span class="col-dot" onclick="scrollToProduct(0)"></span>
+            <span class="col-dot" onclick="scrollToProduct(1)"></span>
+            <span class="col-dot" onclick="scrollToProduct(2)"></span>
+            <span class="col-dot active" onclick="scrollToProduct(3)"></span>
+            <span class="col-dot" onclick="scrollToProduct(4)"></span>
+          </div>
+          <div>
+            <span class="hud-cat">EARRING / گوشواره ۱۸ عیار</span>
+            <h3 class="hud-name">آویز اشک باران مهر</h3>
+          </div>
+          <div class="hud-divider"></div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">وزن تقریبی</div>
+            <div class="hud-weight-val">۶.۴ گرم</div>
+          </div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">شروع قیمت از</div>
+            <div class="hud-price-val" data-price="51600000">۵۱,۶۰۰,۰۰۰</div>
+          </div>
+          <p class="hud-desc">گوشواره‌های جفتی با هندسه لایه‌ای خمیده اسلیمی، آراسته به نگین‌های اشک‌مانند الماس با انعکاس نور آینه‌ای فوق‌العاده.</p>
+          <div class="hud-btns">
+            <button class="hud-buy-btn" type="button" onclick="lenis.scrollTo('#contact')">سفارش قطعه</button>
+            <button class="hud-info-btn" type="button">کاتالوگ فنی</button>
+          </div>
+        </div>
+
+        <div class="collection-hud-card" id="hud-card-4">
+          <div class="collection-dots">
+            <span class="col-dot" onclick="scrollToProduct(0)"></span>
+            <span class="col-dot" onclick="scrollToProduct(1)"></span>
+            <span class="col-dot" onclick="scrollToProduct(2)"></span>
+            <span class="col-dot" onclick="scrollToProduct(3)"></span>
+            <span class="col-dot active" onclick="scrollToProduct(4)"></span>
+          </div>
+          <div>
+            <span class="hud-cat">NECKLACE / گردنبند ۱۸ عیار</span>
+            <h3 class="hud-name">پلاک سیمرغ زرین</h3>
+          </div>
+          <div class="hud-divider"></div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">وزن تقریبی</div>
+            <div class="hud-weight-val">۱۵.۰ گرم</div>
+          </div>
+          <div class="hud-spec-row">
+            <div class="hud-spec-label">شروع قیمت از</div>
+            <div class="hud-price-val" data-price="105000000">۱۰۵,۰۰۰,۰۰۰</div>
+          </div>
+          <p class="hud-desc">آویزی لوکس با قوس منحنی ظریف سیمرغ مینیاتوری؛ مرکز آن با مروارید غلطان دریای جنوب تزیین شده است.</p>
+          <div class="hud-btns">
+            <button class="hud-buy-btn" type="button" onclick="lenis.scrollTo('#contact')">سفارش قطعه</button>
+            <button class="hud-info-btn" type="button">کاتالوگ فنی</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive HUD panel overlays (Left Side) -->
+      <div class="collection-hud-container-left">
+        <!-- Left Card 0 -->
+        <div class="collection-hud-card-left" id="hud-card-left-0">
+          <span class="left-hud-badge">شناسه اصالت: ZG-101</span>
+          <h4 class="left-hud-title">جزییات ساخت و متریال</h4>
+          <ul class="left-hud-list">
+            <li><strong>طلای پایه:</strong> ۱۸ عیار استاندارد</li>
+            <li><strong>نوع پرداخت:</strong> آینه‌ای و مات ترکیبی</li>
+            <li><strong>سنگ‌ها:</strong> یاقوت سرخ برمه، برلیان</li>
+            <li><strong>کلاس ساخت:</strong> دست‌ساز سفارشی</li>
+          </ul>
+          <a href="products.html" class="left-hud-btn">مشاهده در کالکشن کامل</a>
+        </div>
+        <!-- Left Card 1 -->
+        <div class="collection-hud-card-left" id="hud-card-left-1">
+          <span class="left-hud-badge">شناسه اصالت: ZG-205</span>
+          <h4 class="left-hud-title">جزییات ساخت و متریال</h4>
+          <ul class="left-hud-list">
+            <li><strong>طلای پایه:</strong> ۱۸ عیار کشش بالا</li>
+            <li><strong>نوع پرداخت:</strong> مات بافت‌دار (سندبلاست)</li>
+            <li><strong>سبک بافت:</strong> یزدی سنتی</li>
+            <li><strong>کلاس ساخت:</strong> نیمه‌دستی</li>
+          </ul>
+          <a href="products.html" class="left-hud-btn">مشاهده در کالکشن کامل</a>
+        </div>
+        <!-- Left Card 2 -->
+        <div class="collection-hud-card-left" id="hud-card-left-2">
+          <span class="left-hud-badge">شناسه اصالت: ZG-302</span>
+          <h4 class="left-hud-title">جزییات ساخت و متریال</h4>
+          <ul class="left-hud-list">
+            <li><strong>طلای پایه:</strong> ۱۸ عیار زرد</li>
+            <li><strong>نوع پرداخت:</strong> چکش‌کاری دستی</li>
+            <li><strong>سنگ‌ها:</strong> بدون سنگ (Solid)</li>
+            <li><strong>کلاس ساخت:</strong> کوبیده دستی</li>
+          </ul>
+          <a href="products.html" class="left-hud-btn">مشاهده در کالکشن کامل</a>
+        </div>
+        <!-- Left Card 3 -->
+        <div class="collection-hud-card-left" id="hud-card-left-3">
+          <span class="left-hud-badge">شناسه اصالت: ZG-412</span>
+          <h4 class="left-hud-title">جزییات ساخت و متریال</h4>
+          <ul class="left-hud-list">
+            <li><strong>طلای پایه:</strong> ۱۸ عیار رزگلد</li>
+            <li><strong>نوع پرداخت:</strong> براق (High Polish)</li>
+            <li><strong>سنگ‌ها:</strong> الماس تراش اشک</li>
+            <li><strong>کلاس ساخت:</strong> ریخته‌گری دقیق</li>
+          </ul>
+          <a href="products.html" class="left-hud-btn">مشاهده در کالکشن کامل</a>
+        </div>
+        <!-- Left Card 4 -->
+        <div class="collection-hud-card-left" id="hud-card-left-4">
+          <span class="left-hud-badge">شناسه اصالت: ZG-550</span>
+          <h4 class="left-hud-title">جزییات ساخت و متریال</h4>
+          <ul class="left-hud-list">
+            <li><strong>طلای پایه:</strong> ۱۸ عیار زرد و سفید</li>
+            <li><strong>نوع پرداخت:</strong> آینه‌ای و قلم‌زنی</li>
+            <li><strong>سنگ‌ها:</strong> مروارید دریای جنوب</li>
+            <li><strong>کلاس ساخت:</strong> دست‌ساز استادکار</li>
+          </ul>
+          <a href="products.html" class="left-hud-btn">مشاهده در کالکشن کامل</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         SECTION 4 — SERVICES: "خدمات ما"
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */ -->
+    <section class="section-services" id="services">
+      <div class="services-inner">
+        
+        <div class="section-header-wrap">
+          <span class="header-en-title">Our Services</span>
+          <h2 class="header-fa-title">خدمات متمایز گالری زرین</h2>
+          <div class="header-underline"></div>
+        </div>
+
+        <div class="services-grid">
+          
+          <!-- Card 1 -->
+          <div class="service-card" id="s-card-1">
+            <svg class="service-icon-svg" viewBox="0 0 24 24">
+              <!-- Custom gold bar SVG -->
+              <path d="M2 17h20v4H2zm2-2l3-10h10l3 10zm3-10h10M5 13h14" />
+            </svg>
+            <h3 class="service-title">خرید و فروش مسکوکات</h3>
+            <p class="service-body">ارائه فاکتور رسمی سیستمی به همراه شمش‌های عیاردار شرکتی و سکه‌های پلمپ بانکی با ضمانت اصالت فیزیکی بی قید و شرط.</p>
+            <a class="service-link" href="#contact">مشاوره شمش طلا ←</a>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="service-card" id="s-card-2">
+            <svg class="service-icon-svg" viewBox="0 0 24 24">
+              <!-- Pencil on ring SVG -->
+              <path d="M12 2a8 8 0 0 0-8 8c0 4.42 8 12 8 12s8-7.58 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z M2 2l4 4M22 2l-4 4" />
+            </svg>
+            <h3 class="service-title">طراحی اختصاصی ۳بعدی</h3>
+            <p class="service-body">مدل‌سازی زیورآلات رویاهای شما توسط طراحان مجرب طلا و نمایش پیش‌نمایش دقیق سه‌بعدی قبل از قالب‌ریزی مومی.</p>
+            <a class="service-link" href="#contact">طراحی اختصاصی ←</a>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="service-card" id="s-card-3">
+            <svg class="service-icon-svg" viewBox="0 0 24 24">
+              <!-- Tools SVG -->
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l4-4a1 1 0 0 0 0-1.4l-1.6-1.6a1 1 0 0 0-1.4 0z M4 20l7-7 M13 15l2 2M16 12l2 2 M3 15a6 6 0 0 1 6-6h3 M21 21l-4-4" />
+            </svg>
+            <h3 class="service-title">مرمت و آبکاری حرفه‌ای</h3>
+            <p class="service-body">پولیش، رفع خط و خش، بازسازی قطعات قدیمی و تغییر رنگ آبکاری طلا زرد به سفید و رزگلد با استانداردهای کارخانه‌ای.</p>
+            <a class="service-link" href="#contact">مرمت و آبکاری ←</a>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="service-card" id="s-card-4">
+            <svg class="service-icon-svg" viewBox="0 0 24 24">
+              <!-- Certificate SVG -->
+              <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M12 2v3M12 19v3M2 12h3M19 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" />
+            </svg>
+            <h3 class="service-title">ارزیابی گوهرشناسی</h3>
+            <p class="service-body">کارشناسی علمی الماس، زمرد و یاقوت با پیشرفته‌ترین دستگاه‌های آزمایشگاهی گوهرشناسی به همراه صدور شناسنامه بین‌المللی.</p>
+            <a class="service-link" href="#contact">کارشناسی سنگ قیمتی ←</a>
+          </div>
+
+        </div>
+
+        <!-- Bottom Wide Card -->
+        <div class="trust-stat-bar" id="stat-bar-reveal">
+          <div class="stat-item">
+            <span class="stat-title">۱۰۰٪ اصالت فیزیکی</span>
+            <span class="stat-subtitle">عیار استاندارد ۱۸ و ۲۴ عیار شناسنامه‌دار</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-title">پوشش کامل بیمه</span>
+            <span class="stat-subtitle">ارسال قطعات با بیمه کامل حوادث تا منزل شما</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-title">۱۴ روز مرجوعی کامل</span>
+            <span class="stat-subtitle">امکان بازگرداندن بدون قید و شرط قطعات غیرسفارشی</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         SECTION 5 — CONTACT & FOOTER: "تماس با ما"
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */ -->
+    <section class="section-contact" id="contact">
+      <!-- 3px golden divider with sweep lighting -->
+      <div class="contact-top-divider"></div>
+
+      <div class="contact-grid">
+        
+        <!-- Right Column: Brand info -->
+        <div class="contact-info-col" id="contact-info-reveal">
+          <span class="contact-logo">ZARRIN</span>
+          <span class="contact-tagline">Fine Gold & Jewelry — زرین گالری</span>
+          
+          <div class="contact-details-box">
+            
+            <!-- Address Row -->
+            <div class="detail-row">
+              <div class="detail-icon-wrap">
+                <svg class="detail-icon-svg" viewBox="0 0 24 24">
+                  <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                </svg>
+              </div>
+              <div class="detail-texts">
+                <span class="detail-label">آدرس گالری</span>
+                <span class="detail-value">تهران، خیابان ولیعصر، نرسیده به میدان ونک، مجتمع تجاری...، پلاک ۲۴</span>
+              </div>
+            </div>
+
+            <!-- Phones Row -->
+            <div class="detail-row">
+              <div class="detail-icon-wrap">
+                <svg class="detail-icon-svg" viewBox="0 0 24 24">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div class="detail-texts">
+                <span class="detail-label">شماره‌های تماس</span>
+                <span class="detail-value" style="direction: ltr; text-align: right;">۰۲۱-۸۸۸۸۸۸۸۸ | ۰۹۱۲-۳۴۵-۶۷۸۹</span>
+              </div>
+            </div>
+
+            <!-- Hours Row -->
+            <div class="detail-row">
+              <div class="detail-icon-wrap">
+                <svg class="detail-icon-svg" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <div class="detail-texts">
+                <span class="detail-label">ساعات پذیرش حضوری</span>
+                <span class="detail-value">شنبه تا پنجشنبه: ۱۰:۰۰ — ۲۰:۰۰ | جمعه: ۱۲:۰۰ — ۱۸:۰۰</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Social connections -->
+          <div class="social-row">
+            <a class="social-btn" href="#" aria-label="اینستاگرام زرین گالری">
+              <svg class="social-icon-svg" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="var(--gold-pale)" stroke-width="1.5" fill="none"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="var(--gold-pale)" stroke-width="1.5" fill="none"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--gold-pale)" stroke-width="2"/>
+              </svg>
+            </a>
+            <a class="social-btn" href="#" aria-label="تلگرام زرین گالری">
+              <svg class="social-icon-svg" viewBox="0 0 24 24">
+                <path d="M21.9 2.19a.75.75 0 0 0-.82-.04l-19 11a.75.75 0 0 0 .1 1.34l5.3 1.9 2.1 6.3a.75.75 0 0 0 1.25.32l3.4-3.4 4.8 3.5a.75.75 0 0 0 1.18-.54l3-19a.75.75 0 0 0-.3-.72zM8.3 15.6l-3.3-1.2 14-8.1-10.7 9.3z" />
+              </svg>
+            </a>
+            <a class="social-btn" href="#" aria-label="واتساپ زرین گالری">
+              <svg class="social-icon-svg" viewBox="0 0 24 24">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 16.5c-1.57 0-3.1-.42-4.44-1.21l-.32-.19-3.3.87.88-3.22-.21-.34A8.12 8.12 0 0 1 3.54 11.9c0-4.52 3.68-8.2 8.2-8.2 2.19 0 4.25.85 5.8 2.4 1.55 1.55 2.4 3.61 2.4 5.8 0 4.52-3.68 8.2-8.2 8.2z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Left Column: Modern form -->
+        <div class="contact-form-col" id="contact-form-reveal">
+          <h3 class="form-title">ثبت درخواست مشاوره و خرید سفارشی</h3>
+          
+          <form class="gold-form" onsubmit="event.preventDefault(); alert('درخواست شما با موفقیت ثبت شد. به زودی تماس خواهیم گرفت.'); this.reset();">
+            
+            <div class="input-group">
+              <label class="input-label" for="form-name">نام و نام خانوادگی</label>
+              <input class="form-input" type="text" id="form-name" required autocomplete="name" placeholder="مثال: محمد رضایی">
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="form-phone">شماره تماس (ترجیحاً همراه)</label>
+              <input class="form-input" type="tel" id="form-phone" required autocomplete="tel" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="form-subject">موضوع درخواست مشاوره</label>
+              <select class="form-select" id="form-subject">
+                <option value="custom-design">طراحی زیورآلات سفارشی</option>
+                <option value="purchase">خرید قطعات کالکشن برگزیده</option>
+                <option value="repair">تعمیر و بازسازی طلا</option>
+                <option value="inspection">کارشناسی علمی سنگ‌های قیمتی</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="form-message">شرح کوتاه درخواست شما</label>
+              <textarea class="form-textarea" id="form-message" rows="4" placeholder="ابعاد، طرح ذهنی یا بودجه تقریبی خود را بنویسید..."></textarea>
+            </div>
+
+            <button class="form-submit-btn" type="submit">ارسال درخواست مشاوره ←</button>
+
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Bottom footer strip -->
+      <footer class="footer-strip">
+        <div class="footer-links">
+          <a href="#">حریم خصوصی</a>
+          <a href="#">شرایط استفاده</a>
+          <a href="#">سوالات متداول</a>
+        </div>
+        <span>© ۱۴۰۵ زرین گالری — تمامی حقوق مادی و معنوی محفوظ است. طراحی با ❤ برای طلا و جواهر ایرانی.</span>
+      </footer>
+
+    </section>
+
+    <!-- Floating Whatsapp dynamic bubble -->
+    <div class="whatsapp-bubble" onclick="window.open('https://wa.me/989123456789','_blank')">
+      <span class="whatsapp-text">گفتگو در واتساپ</span>
+      <div class="whatsapp-icon-wrap">
+        <svg class="whatsapp-icon-svg" viewBox="0 0 24 24">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 16.5c-1.57 0-3.1-.42-4.44-1.21l-.32-.19-3.3.87.88-3.22-.21-.34A8.12 8.12 0 0 1 3.54 11.9c0-4.52 3.68-8.2 8.2-8.2 2.19 0 4.25.85 5.8 2.4 1.55 1.55 2.4 3.61 2.4 5.8 0 4.52-3.68 8.2-8.2 8.2z"/>
+        </svg>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       MAIN INTERACTIVE SCRIPTS (SELF-CONTAINED MODULES)
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */ -->
+  <script>
+    // Register GSAP ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Dynamic utility for Persian numbers conversion
+    function toPersianNumber(num) {
+      if (num === null || num === undefined) return '';
+      const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+      return num.toString().replace(/\d/g, (x) => persianDigits[x]);
+    }
+
+    function formatPersianCurrency(num) {
+      const formatted = new Intl.NumberFormat('fa-IR').format(num);
+      return formatted;
+    }
+
+    // Apply currency formatting to elements marked with data-price
+    document.querySelectorAll('[data-price]').forEach((el) => {
+      const priceVal = parseInt(el.getAttribute('data-price'));
+      el.textContent = formatPersianCurrency(priceVal) + ' تومان';
+    });
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // LENIS SMOOTH SCROLL MECHANISM
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.88,
+      touchMultiplier: 2,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync GSAP ticker with Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // CUSTOM CURSOR TRAIL LOGIC (Desktop only)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const dot = document.getElementById('custom-cursor-dot');
+    const ring = document.getElementById('custom-cursor-ring');
+    const isMobileDevice = window.matchMedia('(max-width: 960px)').matches;
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    if (!isMobileDevice) {
+      dot.style.display = 'block';
+      ring.style.display = 'block';
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Instant position for the core dot
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+      });
+
+      // Trail loop with physics lerp
+      function updateRing() {
+        ringX += (mouseX - ringX) * 0.13;
+        ringY += (mouseY - ringY) * 0.13;
+        
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+        
+        requestAnimationFrame(updateRing);
+      }
+      updateRing();
+
+      // Trigger scale events on interactive hovers
+      const hovers = 'a, button, input, select, textarea, .col-dot, .whatsapp-bubble';
+      document.querySelectorAll(hovers).forEach((el) => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('is-hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('is-hovering'));
+      });
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // NAVIGATION SCROLL STYLING & MOBILE TOGGLE
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const siteHeader = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Mobile Hamburger
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function toggleMobileMenu() {
+      const active = hamburgerBtn.classList.toggle('active');
+      mobileMenu.classList.toggle('active', active);
+      hamburgerBtn.setAttribute('aria-expanded', String(active));
+      mobileMenu.setAttribute('aria-hidden', String(!active));
+    }
+    hamburgerBtn.addEventListener('click', toggleMobileMenu);
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // ENTRANCE SEQUENCE LOADING
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    window.addEventListener('load', () => {
+      // Stagger loader tagline reveal
+      setTimeout(() => {
+        const subtitle = document.getElementById('loader-subtitle');
+        subtitle.style.opacity = 1;
+        subtitle.style.transform = 'translateY(0)';
+      }, 1000);
+
+      // Dissolve curtain and trigger GSAP entries
+      setTimeout(() => {
+        const curtain = document.getElementById('page-loader');
+        curtain.classList.add('loaded');
+        triggerHeroIntro();
+      }, 2600);
+    });
+
+    function triggerHeroIntro() {
+      const tl = gsap.timeline();
+      tl.to('#h-title', { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' })
+        .to('#h-sub', { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, '-=0.9')
+        .to('#h-tag', { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, '-=0.8')
+        .to('#h-div', { width: 75, duration: 0.8, ease: 'power2.out' }, '-=0.6')
+        .to('#h-btn', { opacity: 1, y: 0, duration: 1.0, ease: 'back.out(1.5)' }, '-=0.5')
+        .to('#h-cue', { opacity: 1, duration: 0.8 }, '-=0.2');
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // THREE.JS CANVAS 1 — HERO GATEWAY
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    (() => {
+      const canvas = document.getElementById('canvas-hero');
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      
+      const scene = new THREE.Scene();
+      
+      // Camera positioning
+      const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      camera.position.z = 5;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.1;
+
+      // Dynamic robust lighting for premium gold reflections
+      const ambientLight = new THREE.AmbientLight(0x2C1E12, 1.25);
+      scene.add(ambientLight);
+
+      const goldLight = new THREE.DirectionalLight(0xFFD700, 3.2);
+      goldLight.position.set(5, 8, 5);
+      scene.add(goldLight);
+
+      const rimLight = new THREE.DirectionalLight(0xFFFFFF, 1.5);
+      rimLight.position.set(-5, 5, -5);
+      scene.add(rimLight);
+
+      // PBR Metallic Gold Material using robust MeshStandardMaterial
+      const goldMaterial = new THREE.MeshStandardMaterial({
+        color: 0xC9912A, // TRUE Persian Gold
+        metalness: 0.9,
+        roughness: 0.15
+      });
+
+      // Mathematical Ribbed Torus designer ring geometry using custom wave formulas
+      function createMathematicalRing() {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        // Torus dimensions: radius 1.65, tube radius 0.24, dense segments for smooth surface
+        const geo = new THREE.TorusGeometry(1.65, 0.24, isMobile ? 48 : 80, isMobile ? 96 : 180);
+        
+        const posAttr = geo.attributes.position;
+        for (let i = 0; i < posAttr.count; i++) {
+          const x = posAttr.getX(i);
+          const y = posAttr.getY(i);
+          const z = posAttr.getZ(i);
+          
+          // Angle in the XY plane around the center of the ring
+          const theta = Math.atan2(y, x);
+          
+          // Radial unit vector pointing outwards in XY plane
+          const nx = Math.cos(theta);
+          const ny = Math.sin(theta);
+          
+          // Generate a premium spiraling ribbed texture mathematically
+          const ribs = 36; // 36 spiral grooves wrapping around the band
+          const ribDepth = 0.048; // depth of mathematical ribs
+          
+          const wave = Math.sin(theta * ribs) * ribDepth;
+          
+          // Displace the vertex along the outward normal and Z axis to create dynamic depth
+          posAttr.setXYZ(i, 
+            x + nx * wave, 
+            y + ny * wave, 
+            z + wave * 1.6
+          );
+        }
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      // Object 1: Highly polished mathematical gold ring
+      const ringGeometry = createMathematicalRing();
+      const mainRing = new THREE.Mesh(ringGeometry, goldMaterial);
+      scene.add(mainRing);
+
+      // Object 2: Particle Field (1,500 gold dust specs)
+      const particleCount = isMobile ? 400 : 1500;
+      const particlesGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const phases = new Float32Array(particleCount);
+
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        // Uniform spherical distribution inside a bounding radius
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        const r = Math.cbrt(Math.random()) * 8; // Max radius 8
+        
+        positions[i] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i + 2] = r * Math.cos(phi);
+        
+        phases[i / 3] = Math.random() * Math.PI * 2;
+      }
+
+      particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      
+      const particlesMaterial = new THREE.PointsMaterial({
+        color: 0xD4A853,
+        size: isMobile ? 0.045 : 0.028,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending
+      });
+
+      const particleField = new THREE.Points(particlesGeo, particlesMaterial);
+      scene.add(particleField);
+
+      // Clock for levitation timing
+      const clock = new THREE.Clock();
+
+      // Render Loop function
+      function renderHeroScene() {
+        const t = clock.getElapsedTime();
+
+        // 1. Gentle continuous Y and X rotation
+        mainRing.rotation.y += 0.0035;
+        mainRing.rotation.x = Math.sin(t * 0.4) * 0.08;
+        
+        // Gentle Y floating bobbing
+        mainRing.position.y = Math.sin(t * 0.8) * 0.06;
+
+        // 2. Slow particle rotation Y
+        particleField.rotation.y += 0.0006;
+        
+        // Individual particle wave oscillation logic
+        const posArr = particlesGeo.attributes.position.array;
+        for (let i = 0; i < particleCount; i++) {
+          const idx = i * 3 + 1; // Y coordinate
+          posArr[idx] += Math.sin(t + phases[i]) * 0.0015;
+        }
+        particlesGeo.attributes.position.needsUpdate = true;
+
+        renderer.render(scene, camera);
+      }
+
+      // Hook render loop into GSAP ticker
+      gsap.ticker.add(renderHeroScene);
+
+      // Responsive resizing
+      function handleResize() {
+        const w = canvas.parentElement.clientWidth;
+        const h = canvas.parentElement.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+
+      // Deallocate canvas resources if page is completely hidden
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          gsap.ticker.remove(renderHeroScene);
+        } else {
+          gsap.ticker.add(renderHeroScene);
+        }
+      });
+
+      // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      // UPGRADED GSAP SCROLLTIMELINE FOR IMAGES ZOOM TUNNEL & OVERLAPS FIX
+      // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      const heroTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.0,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            // Smoothly hide cue arrow on scroll
+            const cue = document.getElementById('h-cue');
+            if (self.progress > 0.4) {
+              cue.style.visibility = 'hidden';
+            } else {
+              cue.style.visibility = 'visible';
+            }
+          }
+        }
+      });
+
+      // 1. Camera zooms forward directly THROUGH the golden ring into the galaxy
+      heroTimeline.to(camera.position, { z: -1.8, ease: 'sine.inOut' }, 0);
+
+      // 2. Main twisted ring scales up massive as camera passes through its center
+      heroTimeline.to(mainRing.scale, { x: 6.5, y: 6.5, z: 6.5, ease: 'sine.inOut' }, 0);
+      heroTimeline.to(goldMaterial, { opacity: 0, ease: 'power2.in' }, 0);
+
+      // 3. Gold dust particles swirl and zoom past the camera view, simulating a gold galaxy
+      heroTimeline.to(particleField.scale, { x: 0.12, y: 0.12, z: 0.12, ease: 'sine.inOut' }, 0);
+      heroTimeline.to(particleField.rotation, { z: Math.PI * 1.8, ease: 'power1.out' }, 0);
+      heroTimeline.to(particlesMaterial, { size: 0.12, ease: 'power2.in' }, 0);
+
+      // 4. Staggered fade out of texts to keep scene neat
+      heroTimeline.to('.hero-text-overlay', { opacity: 0, yPercent: -30, ease: 'power1.in' }, 0);
+      heroTimeline.to('#h-cue', { opacity: 0, ease: 'power1.in' }, 0);
+
+    })();
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // THREE.JS CANVAS 2 — STORY BRACELET (WESTERN/EASTERN GOLD)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    (() => {
+      const slides = document.querySelectorAll('.story-slide');
+      const dots = document.querySelectorAll('.story-dot');
+      let currentIdx = 0;
+      let autoplayTimer = null;
+
+      function updateStorySlides(targetIdx) {
+        // Calculate transition direction to assign prev/next classes for 3D sweep
+        slides.forEach((slide, i) => {
+          slide.classList.remove('active', 'prev-slide', 'next-slide');
+          dots[i].classList.remove('active');
+          
+          if (i === targetIdx) {
+            slide.classList.add('active');
+            dots[i].classList.add('active');
+          } else if (i === (targetIdx - 1 + slides.length) % slides.length) {
+            slide.classList.add('prev-slide');
+          } else if (i === (targetIdx + 1) % slides.length) {
+            slide.classList.add('next-slide');
+          }
+        });
+        
+        currentIdx = targetIdx;
+      }
+
+      window.gotoStorySlide = function(idx) {
+        updateStorySlides(idx);
+        resetAutoplay();
+      }
+
+      window.nextStorySlide = function() {
+        const nextIdx = (currentIdx + 1) % slides.length;
+        updateStorySlides(nextIdx);
+        resetAutoplay();
+      }
+
+      window.prevStorySlide = function() {
+        const prevIdx = (currentIdx - 1 + slides.length) % slides.length;
+        updateStorySlides(prevIdx);
+        resetAutoplay();
+      }
+
+      function startAutoplay() {
+        autoplayTimer = setInterval(() => {
+          const nextIdx = (currentIdx + 1) % slides.length;
+          updateStorySlides(nextIdx);
+        }, 5000);
+      }
+
+      function resetAutoplay() {
+        clearInterval(autoplayTimer);
+        startAutoplay();
+      }
+
+      // Initialize slide layout classes on start
+      updateStorySlides(0);
+      startAutoplay();
+    })();
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // GSAP STORY COUNTERS COUNT-UP ANIMATION
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    (() => {
+      const counters = document.querySelectorAll('.counter-number');
+      
+      counters.forEach((counter) => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const suffix = counter.getAttribute('data-suffix') || '';
+        
+        const countObj = { val: 0 };
+        
+        gsap.to(countObj, {
+          val: target,
+          duration: 2.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '#story',
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+          onUpdate: () => {
+            const formatted = formatPersianCurrency(Math.floor(countObj.val));
+            counter.textContent = formatted + suffix;
+          }
+        });
+      });
+    })();
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // GSAP STORY CONTENT FADE-IN ANIMATION
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    (() => {
+      gsap.to('.story-paragraph, .story-quote-card, .story-more-link', {
+        opacity: 1,
+        y: 0,
+        duration: 1.0,
+        stagger: 0.15,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#story',
+          start: 'top 75%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    })();
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // COLLECTION IMAGES PARALLAX SLIDER (ULTRA LUXURY)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      (() => {
+        const collectionHuds = document.querySelectorAll('.collection-hud-card');
+        const collectionHudsLeft = document.querySelectorAll('.collection-hud-card-left');
+        const slides = document.querySelectorAll('.col-slide');
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        let activeIndex = 0;
+        
+        window.scrollToProduct = function(idx) {
+          // Moves ScrollTrigger pin position of section 3 to the targeted step (each step = 50vh)
+          const sectionOffset = document.getElementById('collection').offsetTop;
+          const scrollPos = sectionOffset + (idx * window.innerHeight * 0.5);
+          lenis.scrollTo(scrollPos, { duration: 1.2 });
+        }
+
+        function toggleProductHUD(idx) {
+          collectionHuds.forEach((hud, i) => {
+            if (i === idx) {
+              hud.classList.add('active');
+            } else {
+              hud.classList.remove('active');
+            }
+          });
+
+          collectionHudsLeft.forEach((hudLeft, i) => {
+            if (i === idx) {
+              hudLeft.classList.add('active');
+            } else {
+              hudLeft.classList.remove('active');
+            }
+          });
+          
+          slides.forEach((slide, i) => {
+            if (i === idx) {
+              slide.classList.add('active');
+            } else {
+              slide.classList.remove('active');
+            }
+          });
+        }
+
+        // GSAP ScrollTrigger to lock screen and cycle slides smoothly on scroll
+        ScrollTrigger.create({
+          trigger: '#collection',
+          start: 'top top',
+          end: '+=300%',
+          scrub: 1.0,
+          pin: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            
+            // Determine which of the 5 slides should be active (range 0 to 4)
+            const active = Math.min(4, Math.floor(progress * 4.99));
+            
+            if (active !== activeIndex) {
+              activeIndex = active;
+              toggleProductHUD(active);
+            }
+          },
+          onToggle: (self) => {
+            const container = document.querySelector('.collection-canvas-container');
+            if (self.isActive) {
+              gsap.to(container, { opacity: 1, autoAlpha: 1, duration: 0.4 });
+            } else {
+              gsap.to(container, { opacity: 0, autoAlpha: 0, duration: 0.4 });
+            }
+          }
+        });
+
+        // 3D Perspective Tilt on mouse movement for rich tactile desktop experience
+        if (!isMobile) {
+          document.querySelectorAll('.col-slide-img').forEach((img) => {
+            const slide = img.parentElement;
+            slide.style.pointerEvents = 'auto'; // allow mouse actions
+            
+            slide.addEventListener('mousemove', (e) => {
+              const rect = img.getBoundingClientRect();
+              const x = e.clientX - rect.left - rect.width / 2;
+              const y = e.clientY - rect.top - rect.height / 2;
+              
+              // Moderate tilt limits
+              const rotY = (x / (rect.width / 2)) * 14;
+              const rotX = -(y / (rect.height / 2)) * 14;
+              
+              img.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg) scale(1.02)`;
+            });
+            
+            slide.addEventListener('mouseleave', () => {
+              img.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+            });
+          });
+        }
+      })();
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // SECTION 4 & 5 — CARD REVEALS & FOCUS PULSES
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+    // Services grid cards stagger cascade
+    gsap.utils.toArray('.service-card').forEach((card, idx) => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#services',
+          start: 'top 75%',
+          toggleActions: 'play none none reverse',
+          delay: idx * 0.12
+        }
+      });
+    });
+
+    // Stats bar reveal
+    gsap.to('#stat-bar-reveal', {
+      opacity: 1,
+      y: 0,
+      duration: 1.0,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#stat-bar-reveal',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    // Contact reveals
+    gsap.fromTo('#contact-info-reveal', 
+      { opacity: 0, x: 40 }, 
+      { opacity: 1, x: 0, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: '#contact', start: 'top 70%' }}
+    );
+    gsap.fromTo('#contact-form-reveal', 
+      { opacity: 0, x: -40 }, 
+      { opacity: 1, x: 0, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: '#contact', start: 'top 70%' }}
+    );
+
+  </script>
+</body>
+</html>

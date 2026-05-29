@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود پنل مدیریت | زرین گالری</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --obsidian:      #0A0806;
+      --charcoal:      #141210;
+      --dark-brown:    #1C1812;
+      --gold-cream:    #EDD59A;
+      --gold-primary:  #C9912A;
+      --ivory:         #FAF6F0;
+      --separator:     rgba(201, 145, 42, 0.15);
+      --font-display:  'Cinzel Decorative', serif;
+      --font-persian:  'Vazirmatn', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-persian);
+      background: var(--obsidian);
+      color: var(--ivory);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Ambient Background Effect */
+    .ambient-light {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201, 145, 42, 0.1) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .login-box {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 420px;
+      background: rgba(20, 18, 16, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--separator);
+      border-radius: 12px;
+      padding: 50px 40px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--gold-primary);
+      margin-bottom: 10px;
+      letter-spacing: 0.1em;
+    }
+    
+    .subtitle {
+      color: var(--gold-cream);
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 30px;
+      text-align: right;
+    }
+    .input-group input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--separator);
+      padding: 10px 5px;
+      color: var(--ivory);
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-bottom-color: var(--gold-primary);
+    }
+    .input-group label {
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      color: rgba(250, 246, 240, 0.5);
+      font-size: 1rem;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    /* Floating Label effect */
+    .input-group input:focus ~ label,
+    .input-group input:not(:placeholder-shown) ~ label {
+      top: -15px;
+      font-size: 0.8rem;
+      color: var(--gold-primary);
+    }
+
+    .login-btn {
+      width: 100%;
+      background: var(--gold-primary);
+      color: var(--obsidian);
+      border: none;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .login-btn:hover {
+      background: var(--gold-cream);
+      box-shadow: 0 0 15px rgba(201, 145, 42, 0.4);
+    }
+
+    .forgot-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: rgba(250, 246, 240, 0.6);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .forgot-link:hover {
+      color: var(--gold-cream);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-light"></div>
+
+  <div class="login-box">
+    <div class="logo">ZARRIN</div>
+    <div class="subtitle">ورود به سیستم مدیریت گالری</div>
+    
+    <form id="loginForm">
+      <div id="error-msg" style="color: #ff6b6b; font-size: 0.9rem; margin-bottom: 15px; display: none;">نام کاربری یا رمز عبور اشتباه است</div>
+      
+      <div class="input-group">
+        <!-- placeholder=" " is required for :not(:placeholder-shown) to work CSS-only -->
+        <input type="text" id="username" name="username" placeholder=" " required autocomplete="off">
+        <label for="username">نام کاربری</label>
+      </div>
+      
+      <div class="input-group">
+        <input type="password" id="password" name="password" placeholder=" " required>
+        <label for="password">رمز عبور</label>
+      </div>
+      
+      <button type="submit" class="login-btn">ورود</button>
+      
+      <a href="#" class="forgot-link">رمز عبور را فراموش کرده‌اید؟</a>
+    </form>
+  </div>
+
+  <script type="module">
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      const errorMsg = document.getElementById('error-msg');
+      
+      // Check credentials against Vite .env variables
+      if (user === import.meta.env.VITE_ADMIN_USER && pass === import.meta.env.VITE_ADMIN_PASS) {
+        sessionStorage.setItem('isAdmin', 'true');
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

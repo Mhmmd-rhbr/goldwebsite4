@@ -1,0 +1,14 @@
+{
+  "name": "goldwebsite4",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 7005",
+    "build": "vite build",
+    "preview": "vite preview --port 7005"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

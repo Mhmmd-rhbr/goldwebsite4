@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مجموعه کامل | زرین گالری</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* DESIGN SYSTEM & COLOR TOKENS */
+    :root {
+      --obsidian:      #0A0806;
+      --charcoal:      #141210;
+      --dark-brown:    #1C1812;
+      --warm-black:    #221E18;
+      --gold-pale:     #F5E6C8;
+      --gold-cream:    #EDD59A;
+      --gold-light:    #D4A853;
+      --gold-primary:  #C9912A;
+      --gold-deep:     #A6741A;
+      --ivory:         #FAF6F0;
+      --parchment:     #E8DDD0;
+      --muted:         #8A7A6A;
+      --separator:     rgba(201, 145, 42, 0.15);
+      
+      --font-display:  'Cinzel Decorative', serif;
+      --font-heading:  'Playfair Display', serif;
+      --font-serif:    'Cormorant Garamond', serif;
+      --font-persian:  'Vazirmatn', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      background: var(--obsidian);
+      direction: rtl;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-deep) var(--charcoal);
+    }
+    body {
+      color: var(--ivory);
+      font-family: var(--font-persian);
+      background: linear-gradient(180deg, #0A0806 0%, #0F0D0A 40%, #0A0806 100%);
+      line-height: 1.8;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--obsidian); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-deep); border-radius: 10px; }
+
+    /* LAYOUT */
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 8, 6, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--separator);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .back-btn {
+      color: var(--ivory);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 8px 16px;
+      border: 1px solid var(--separator);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: var(--gold-primary);
+      color: var(--obsidian);
+    }
+
+    /* Main Grid Area */
+    .catalog-container {
+      display: flex;
+      flex: 1;
+      padding: 40px 5%;
+      gap: 40px;
+    }
+
+    /* Sidebar Filters */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      padding: 30px;
+      background: rgba(20, 18, 16, 0.4);
+      border: 1px solid var(--separator);
+      border-radius: 8px;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+    .filter-group {
+      margin-bottom: 30px;
+    }
+    .filter-title {
+      font-family: var(--font-persian);
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--gold-cream);
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--separator);
+      padding-bottom: 10px;
+    }
+    .filter-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: var(--parchment);
+      cursor: pointer;
+    }
+    .filter-label input {
+      accent-color: var(--gold-primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--dark-brown);
+      border: 1px solid var(--separator);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(201, 145, 42, 0.15);
+      border-color: var(--gold-primary);
+    }
+    .product-img-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #111;
+      position: relative;
+    }
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      opacity: 0.8;
+    }
+    .product-card:hover .product-img-wrap img {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    .product-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .product-cat {
+      font-family: var(--font-serif);
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      margin-bottom: 5px;
+    }
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ivory);
+      margin-bottom: 15px;
+    }
+    .product-price {
+      font-size: 1.2rem;
+      color: var(--gold-cream);
+      margin-top: auto;
+      font-weight: 600;
+    }
+    .quick-view-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: rgba(10, 8, 6, 0.8);
+      color: var(--gold-primary);
+      border: 1px solid var(--gold-primary);
+      padding: 10px 20px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: all 0.3s ease;
+      font-family: var(--font-persian);
+      cursor: pointer;
+    }
+    .product-card:hover .quick-view-btn {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .quick-view-btn:hover {
+      background: var(--gold-primary);
+      color: var(--obsidian);
+    }
+
+    /* Native Dialog Styling */
+    dialog {
+      margin: auto;
+      padding: 0;
+      border: 1px solid var(--gold-primary);
+      border-radius: 12px;
+      background: var(--charcoal);
+      color: var(--ivory);
+      width: 90%;
+      max-width: 900px;
+      max-height: 90vh;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 40px rgba(201, 145, 42, 0.2);
+    }
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+    .dialog-content {
+      display: flex;
+      flex-direction: row;
+      min-height: 400px;
+    }
+    .dialog-img {
+      flex: 1;
+      background: #000;
+      position: relative;
+    }
+    .dialog-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+    .dialog-details {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .close-dialog {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .close-dialog:hover {
+      color: var(--gold-primary);
+    }
+    .dialog-title {
+      font-size: 1.8rem;
+      color: var(--gold-cream);
+      margin-bottom: 10px;
+    }
+    .dialog-spec {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--separator);
+      padding: 12px 0;
+      font-size: 0.95rem;
+    }
+    .spec-label { color: var(--muted); }
+    .spec-val { color: var(--ivory); font-weight: 500; }
+    
+    .dialog-actions {
+      margin-top: auto;
+      padding-top: 30px;
+    }
+    .dialog-price {
+      font-size: 1.8rem;
+      color: var(--gold-primary);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .order-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--gold-primary);
+      color: var(--obsidian);
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .order-btn:hover {
+      background: var(--gold-light);
+    }
+
+    @media (max-width: 900px) {
+      .catalog-container { flex-direction: column; }
+      .sidebar { width: 100%; position: static; }
+      .dialog-content { flex-direction: column; }
+      .dialog-img { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">ZARRIN</div>
+    <a href="index.html" class="back-btn">بازگشت به خانه</a>
+  </header>
+
+  <!-- Main Catalog -->
+  <div class="catalog-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="filter-group">
+        <h4 class="filter-title">دسته بندی</h4>
+        <label class="filter-label"><input type="checkbox" checked> همه محصولات</label>
+        <label class="filter-label"><input type="checkbox"> انگشتر</label>
+        <label class="filter-label"><input type="checkbox"> گردنبند</label>
+        <label class="filter-label"><input type="checkbox"> دستبند</label>
+        <label class="filter-label"><input type="checkbox"> گوشواره</label>
+      </div>
+
+      <div class="filter-group">
+        <h4 class="filter-title">عیار طلا</h4>
+        <label class="filter-label"><input type="checkbox"> ۱۸ عیار</label>
+        <label class="filter-label"><input type="checkbox"> ۲۱ عیار</label>
+        <label class="filter-label"><input type="checkbox"> ۲۴ عیار</label>
+      </div>
+      
+      <div class="filter-group">
+        <h4 class="filter-title">حدود قیمت</h4>
+        <label class="filter-label"><input type="radio" name="price"> زیر ۵۰ میلیون</label>
+        <label class="filter-label"><input type="radio" name="price"> ۵۰ تا ۱۰۰ میلیون</label>
+        <label class="filter-label"><input type="radio" name="price"> بالای ۱۰۰ میلیون</label>
+      </div>
+    </aside>
+
+    <!-- Products -->
+    <main class="product-grid" id="productGrid">
+      <!-- Product 1 -->
+      <article class="product-card">
+        <div class="product-img-wrap">
+          <img src="assets/images/ring.png" alt="انگشتر الماس باغ ایران">
+          <button class="quick-view-btn" onclick="openDialog('انگشتر الماس باغ ایران', '۴۲,۵۰۰,۰۰۰', 'assets/images/ring.png', '۵.۲ گرم', '۱۸ عیار')">مشاهده سریع</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">انگشتر</span>
+          <h3 class="product-title">انگشتر الماس باغ ایران</h3>
+          <div class="product-price">۴۲,۵۰۰,۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <!-- Product 2 -->
+      <article class="product-card">
+        <div class="product-img-wrap">
+          <img src="assets/images/chain.png" alt="زنجیر مینی‌مال ابریشم">
+          <button class="quick-view-btn" onclick="openDialog('زنجیر مینی‌مال ابریشم', '۸۹,۲۰۰,۰۰۰', 'assets/images/chain.png', '۱۲.۸ گرم', '۱۸ عیار')">مشاهده سریع</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">گردنبند</span>
+          <h3 class="product-title">زنجیر مینی‌مال ابریشم</h3>
+          <div class="product-price">۸۹,۲۰۰,۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <!-- Product 3 -->
+      <article class="product-card">
+        <div class="product-img-wrap">
+          <img src="assets/images/bangle.png" alt="دستبند کوبیده زاگرس">
+          <button class="quick-view-btn" onclick="openDialog('دستبند کوبیده زاگرس', '۱۴۵,۰۰۰,۰۰۰', 'assets/images/bangle.png', '۲۲ گرم', '۱۸ عیار')">مشاهده سریع</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">دستبند</span>
+          <h3 class="product-title">دستبند کوبیده زاگرس</h3>
+          <div class="product-price">۱۴۵,۰۰۰,۰۰۰ تومان</div>
+        </div>
+      </article>
+
+      <!-- Product 4 -->
+      <article class="product-card">
+        <div class="product-img-wrap">
+          <img src="assets/images/earring.png" alt="آویز اشک باران مهر">
+          <button class="quick-view-btn" onclick="openDialog('آویز اشک باران مهر', '۳۴,۱۰۰,۰۰۰', 'assets/images/earring.png', '۴.۶ گرم', '۱۸ عیار')">مشاهده سریع</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">گوشواره</span>
+          <h3 class="product-title">آویز اشک باران مهر</h3>
+          <div class="product-price">۳۴,۱۰۰,۰۰۰ تومان</div>
+        </div>
+      </article>
+      
+      <!-- Product 5 -->
+      <article class="product-card">
+        <div class="product-img-wrap">
+          <img src="assets/images/necklace.png" alt="پلاک سیمرغ زرین">
+          <button class="quick-view-btn" onclick="openDialog('پلاک سیمرغ زرین', '۶۷,۸۰۰,۰۰۰', 'assets/images/necklace.png', '۸.۴ گرم', '۱۸ عیار')">مشاهده سریع</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">گردنبند</span>
+          <h3 class="product-title">پلاک سیمرغ زرین</h3>
+          <div class="product-price">۶۷,۸۰۰,۰۰۰ تومان</div>
+        </div>
+      </article>
+
+    </main>
+  </div>
+</div>
+
+<!-- Native HTML5 Dialog for Quick View -->
+<dialog id="productDialog">
+  <div class="dialog-content">
+    <div class="dialog-img">
+      <img id="dImg" src="" alt="">
+    </div>
+    <div class="dialog-details">
+      <button class="close-dialog" onclick="closeDialog()">&times;</button>
+      <h2 class="dialog-title" id="dTitle">نام محصول</h2>
+      <p style="color:var(--muted); margin-bottom: 25px;">کد محصول: <span id="dId">ZG-10293</span></p>
+      
+      <div class="dialog-spec">
+        <span class="spec-label">وزن طلا:</span>
+        <span class="spec-val" id="dWeight">۵ گرم</span>
+      </div>
+      <div class="dialog-spec">
+        <span class="spec-label">عیار:</span>
+        <span class="spec-val" id="dKarat">۱۸ عیار</span>
+      </div>
+      <div class="dialog-spec">
+        <span class="spec-label">اجرت ساخت:</span>
+        <span class="spec-val">۱۵٪</span>
+      </div>
+      <div class="dialog-spec">
+        <span class="spec-label">وضعیت:</span>
+        <span class="spec-val" style="color: #4CAF50;">موجود در گالری</span>
+      </div>
+
+      <div class="dialog-actions">
+        <div class="dialog-price" id="dPrice">۴۲,۵۰۰,۰۰۰ تومان</div>
+        <button class="order-btn">افزودن به سبد خرید</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('productDialog');
+
+  function openDialog(title, price, img, weight, karat, id = 'ZG-10293') {
+    document.getElementById('dTitle').innerText = title;
+    // Format price if it's just a number
+    const formattedPrice = typeof price === 'number' ? Math.round(price).toLocaleString('fa-IR') : price;
+    document.getElementById('dPrice').innerText = formattedPrice + ' تومان';
+    document.getElementById('dImg').src = img;
+    document.getElementById('dWeight').innerText = weight;
+    document.getElementById('dKarat').innerText = karat;
+    document.getElementById('dId').innerText = id;
+    
+    dialog.showModal();
+    // Prevent scrolling on body
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDialog() {
+    dialog.close();
+    document.body.style.overflow = 'auto';
+  }
+
+  // Light dismiss logic
+  dialog.addEventListener('click', (e) => {
+    const dialogDimensions = dialog.getBoundingClientRect()
+    if (
+      e.clientX < dialogDimensions.left ||
+      e.clientX > dialogDimensions.right ||
+      e.clientY < dialogDimensions.top ||
+      e.clientY > dialogDimensions.bottom
+    ) {
+      closeDialog();
+    }
+  });
+
+  // Load products from LocalStorage
+  document.addEventListener("DOMContentLoaded", () => {
+    const products = JSON.parse(localStorage.getItem('zarrin_products')) || [];
+    const grid = document.getElementById('productGrid');
+    
+    // Map of categories to Persian names
+    const catMap = {
+      'ring': 'انگشتر',
+      'necklace': 'گردنبند',
+      'bracelet': 'دستبند',
+      'earring': 'گوشواره',
+      'set': 'سرویس کامل'
+    };
+
+    // Prepend products so newest appear first
+    products.reverse().forEach(p => {
+      const pCat = catMap[p.category] || p.category;
+      const formattedPrice = Math.round(p.price).toLocaleString('fa-IR');
+      
+      const article = document.createElement('article');
+      article.className = 'product-card';
+      article.innerHTML = `
+        <div class="product-img-wrap">
+          <img src="${p.image}" alt="${p.title}">
+          <button class="quick-view-btn" onclick="openDialog('${p.title}', ${p.price}, '${p.image}', '${p.weight} گرم', '${p.karat} عیار', '${p.id}')">مشاهده سریع</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">${pCat}</span>
+          <h3 class="product-title">${p.title}</h3>
+          <div class="product-price">${formattedPrice} تومان</div>
+        </div>
+      `;
+      grid.prepend(article);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -297,6 +297,7 @@
       line-height: 1;
       background: linear-gradient(135deg, var(--gold-pale), var(--gold-primary), var(--gold-deep));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 700;
     }
@@ -465,6 +466,7 @@
       line-height: 1;
       background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold-cream) 35%, var(--gold-primary) 70%, var(--gold-deep) 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 8px;
       will-change: transform, opacity;
@@ -779,6 +781,7 @@
       line-height: 1;
       background: linear-gradient(90deg, var(--gold-primary), var(--gold-pale));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 12px;
     }
@@ -1210,6 +1213,7 @@
       font-size: 3.5rem;
       background: linear-gradient(135deg, var(--gold-pale), var(--gold-cream));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1;
       margin-bottom: 8px;
@@ -1384,6 +1388,7 @@
       font-size: 4rem;
       background: linear-gradient(135deg, var(--gold-pale), var(--gold-primary));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1;
     }
@@ -1639,6 +1644,39 @@
         grid-template-columns: 1fr;
         gap: 60px;
         padding-inline: 24px;
+      }
+
+      /* Fix overlapping HUDs on mobile */
+      .collection-hud-card {
+        top: auto;
+        bottom: 2vh;
+        right: 50%;
+        transform: translate(50%, 20px);
+        width: 92vw;
+        padding: 20px;
+      }
+      .collection-hud-card.active {
+        transform: translate(50%, 0);
+      }
+      
+      .collection-hud-card-left {
+        top: 10vh;
+        left: 50%;
+        transform: translate(-50%, -20px);
+        width: 92vw;
+        padding: 15px;
+      }
+      .collection-hud-card-left.active {
+        transform: translate(-50%, 0);
+      }
+      
+      .col-slide-img {
+        width: 35vh;
+        max-width: 80vw;
+      }
+      
+      .collection-fixed-title {
+        display: none;
       }
     }
 
@@ -2459,74 +2497,285 @@
       
       const scene = new THREE.Scene();
       
-      // Camera positioning
-      const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-      camera.position.z = 5;
+      // Camera — 45° FOV, positioned slightly above center for dramatic angle
+      const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      camera.position.set(0, 0.8, 7.5);
+      camera.lookAt(0, 0, 0);
 
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.1;
-
-      // Dynamic robust lighting for premium gold reflections
-      const ambientLight = new THREE.AmbientLight(0x2C1E12, 1.25);
-      scene.add(ambientLight);
-
-      const goldLight = new THREE.DirectionalLight(0xFFD700, 3.2);
-      goldLight.position.set(5, 8, 5);
-      scene.add(goldLight);
-
-      const rimLight = new THREE.DirectionalLight(0xFFFFFF, 1.5);
-      rimLight.position.set(-5, 5, -5);
-      scene.add(rimLight);
-
-      // PBR Metallic Gold Material using robust MeshStandardMaterial
-      const goldMaterial = new THREE.MeshStandardMaterial({
-        color: 0xC9912A, // TRUE Persian Gold
-        metalness: 0.9,
-        roughness: 0.15
+      // Mouse parallax state
+      let targetMouseX = 0;
+      let targetMouseY = 0;
+      canvas.parentElement.addEventListener('mousemove', (e) => {
+        targetMouseX = ((e.clientX / window.innerWidth) - 0.5) * 0.5;
+        targetMouseY = -((e.clientY / window.innerHeight) - 0.5) * 0.3;
       });
 
-      // Mathematical Ribbed Torus designer ring geometry using custom wave formulas
-      function createMathematicalRing() {
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        // Torus dimensions: radius 1.65, tube radius 0.24, dense segments for smooth surface
-        const geo = new THREE.TorusGeometry(1.65, 0.24, isMobile ? 48 : 80, isMobile ? 96 : 180);
-        
-        const posAttr = geo.attributes.position;
-        for (let i = 0; i < posAttr.count; i++) {
-          const x = posAttr.getX(i);
-          const y = posAttr.getY(i);
-          const z = posAttr.getZ(i);
-          
-          // Angle in the XY plane around the center of the ring
-          const theta = Math.atan2(y, x);
-          
-          // Radial unit vector pointing outwards in XY plane
-          const nx = Math.cos(theta);
-          const ny = Math.sin(theta);
-          
-          // Generate a premium spiraling ribbed texture mathematically
-          const ribs = 36; // 36 spiral grooves wrapping around the band
-          const ribDepth = 0.048; // depth of mathematical ribs
-          
-          const wave = Math.sin(theta * ribs) * ribDepth;
-          
-          // Displace the vertex along the outward normal and Z axis to create dynamic depth
-          posAttr.setXYZ(i, 
-            x + nx * wave, 
-            y + ny * wave, 
-            z + wave * 1.6
-          );
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+      renderer.setClearColor(0x000000, 1);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.6;
+      renderer.outputEncoding = THREE.sRGBEncoding;
+
+      // ── LIGHTING: 5 strategic point lights + dim ambient ──
+      // Ambient — very dim warm tint
+      const ambientLight = new THREE.AmbientLight(0x100A00, 0.35);
+      scene.add(ambientLight);
+
+      // Key light top — CRITICAL: creates golden crescent arc on top edge
+      const keyLight = new THREE.PointLight(0xFFD700, 16, 16, 2);
+      keyLight.position.set(0, 4.5, 3);
+      scene.add(keyLight);
+
+      // Rim light right — right side edge highlight
+      const rimLightR = new THREE.PointLight(0xFFA500, 9, 13, 2);
+      rimLightR.position.set(4.5, 1.5, -0.5);
+      scene.add(rimLightR);
+
+      // Fill light left — subtle warm fill prevents ring from disappearing
+      const fillLight = new THREE.PointLight(0xBB6600, 4, 13, 2);
+      fillLight.position.set(-4, -1, -1);
+      scene.add(fillLight);
+
+      // Back edge light — rim from behind, golden depth
+      const backLight = new THREE.PointLight(0xFF8800, 5, 11, 2);
+      backLight.position.set(0, 0, -5);
+      scene.add(backLight);
+
+      // Bottom accent — prevents flat look
+      const bottomLight = new THREE.PointLight(0x664400, 3, 10, 2);
+      bottomLight.position.set(1, -4, 1);
+      scene.add(bottomLight);
+
+      // 1. Alternating polished/matte texture map for the black gold band
+      const roughnessCanvas = document.createElement('canvas');
+      roughnessCanvas.width = 256;
+      roughnessCanvas.height = 256;
+      const rCtx = roughnessCanvas.getContext('2d');
+      rCtx.fillStyle = '#0a0a0a'; // mirror polished (roughness 0.04)
+      rCtx.fillRect(0, 0, 256, 256);
+      rCtx.fillStyle = '#666666'; // satin brushed (roughness 0.4)
+      // Alternating polished and satin-brushed vertical bands
+      for (let i = 0; i < 16; i++) {
+        if (i % 2 === 0) {
+          rCtx.fillRect((i / 16) * 256, 0, (1 / 16) * 256, 256);
         }
+      }
+      const roughnessMap = new THREE.CanvasTexture(roughnessCanvas);
+      roughnessMap.wrapS = THREE.RepeatWrapping;
+      roughnessMap.wrapT = THREE.RepeatWrapping;
+
+      // Deep Oxidized 22k Black Gold Material
+      const blackGoldMaterial = new THREE.MeshStandardMaterial({
+        color: 0x151413, // Deep gunmetal graphite black gold
+        metalness: 1.0,
+        roughness: 0.15,
+        roughnessMap: roughnessMap,
+        transparent: true,
+        opacity: 1.0
+      });
+
+      // Burnished warm 24k champagne gold lining for the inner circumference
+      const champagneGoldMaterial = new THREE.MeshStandardMaterial({
+        color: 0xEAD59A, // Molten champagne gold
+        metalness: 1.0,
+        roughness: 0.03, // burnished liquid-mercury finish
+        transparent: true,
+        opacity: 1.0
+      });
+
+      // Group representing the main ring
+      const mainRing = new THREE.Group();
+      scene.add(mainRing);
+
+      // 2. Custom D-shaped Torus Geometry with micro-engraved calligraphy
+      function createPersianCalligraphyRing() {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const radius = 1.6;
+        const tubeWidth = 0.28;
+        const tubeHeight = 0.15;
+        const radialSegments = isMobile ? 32 : 64;
+        const tubularSegments = isMobile ? 64 : 128;
+        
+        const geo = new THREE.BufferGeometry();
+        
+        const vertices = [];
+        const indices = [];
+        const normals = [];
+        const uvs = [];
+        
+        for (let j = 0; j <= tubularSegments; j++) {
+          const theta = (j / tubularSegments) * Math.PI * 2;
+          const cosTheta = Math.cos(theta);
+          const sinTheta = Math.sin(theta);
+          
+          for (let i = 0; i <= radialSegments; i++) {
+            const phi = (i / radialSegments) * Math.PI * 2;
+            const cosPhi = Math.cos(phi);
+            const sinPhi = Math.sin(phi);
+            
+            // D-shape math: convex outside, flat inside
+            let dr = 0;
+            let dy = 0;
+            
+            if (cosPhi >= 0) {
+              // Convex outer half
+              dr = cosPhi * tubeWidth;
+              dy = sinPhi * tubeHeight;
+            } else {
+              // Flat inner half
+              dr = -0.22 * tubeWidth;
+              dy = sinPhi * tubeHeight * 1.25;
+            }
+            
+            let r = radius + dr;
+            
+            // Micro-engrave Persian arabesque vine calligraphy (barely raised 0.2mm)
+            // on the outer convex surface
+            if (cosPhi > 0.3) {
+              // Calligraphy wave path formula
+              const callig = Math.sin(theta * 28 + Math.sin(dy * 20) * 3.5) * Math.cos(dy * 45 + Math.cos(theta * 8) * 1.5);
+              if (callig > 0.35 && Math.abs(dy) < 0.08) {
+                r += 0.008; // Raised by ~0.2mm
+              }
+            }
+            
+            const x = r * cosTheta;
+            const y = r * sinTheta;
+            const z = dy;
+            
+            vertices.push(x, y, z);
+            uvs.push(j / tubularSegments, i / radialSegments);
+          }
+        }
+        
+        for (let j = 0; j < tubularSegments; j++) {
+          for (let i = 0; i < radialSegments; i++) {
+            const a = j * (radialSegments + 1) + i;
+            const b = j * (radialSegments + 1) + i + 1;
+            const c = (j + 1) * (radialSegments + 1) + i + 1;
+            const d = (j + 1) * (radialSegments + 1) + i;
+            
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+          }
+        }
+        
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+        geo.setIndex(indices);
         geo.computeVertexNormals();
         return geo;
       }
 
-      // Object 1: Highly polished mathematical gold ring
-      const ringGeometry = createMathematicalRing();
-      const mainRing = new THREE.Mesh(ringGeometry, goldMaterial);
-      scene.add(mainRing);
+      // Outer deep black gold D-shaped ring band
+      const ringGeo = createPersianCalligraphyRing();
+      const ringMesh = new THREE.Mesh(ringGeo, blackGoldMaterial);
+      mainRing.add(ringMesh);
+
+      // Inner burnished champagne gold lining (perfectly smooth, D-shape matching)
+      function createInnerGoldLining() {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        // Slightly smaller radius to fit inside
+        const radius = 1.57;
+        const tubeWidth = 0.23;
+        const tubeHeight = 0.145;
+        const radialSegments = isMobile ? 24 : 48;
+        const tubularSegments = isMobile ? 48 : 96;
+        
+        const geo = new THREE.BufferGeometry();
+        const vertices = [];
+        const indices = [];
+        const uvs = [];
+        
+        for (let j = 0; j <= tubularSegments; j++) {
+          const theta = (j / tubularSegments) * Math.PI * 2;
+          const cosTheta = Math.cos(theta);
+          const sinTheta = Math.sin(theta);
+          
+          for (let i = 0; i <= radialSegments; i++) {
+            const phi = (i / radialSegments) * Math.PI * 2;
+            const cosPhi = Math.cos(phi);
+            const sinPhi = Math.sin(phi);
+            
+            // Flatten inner edge
+            let dr = 0;
+            let dy = 0;
+            if (cosPhi <= 0) {
+              dr = cosPhi * tubeWidth;
+              dy = sinPhi * tubeHeight;
+            } else {
+              // Invisible outer part scaled in
+              dr = cosPhi * tubeWidth * 0.1;
+              dy = sinPhi * tubeHeight;
+            }
+            
+            const r = radius + dr;
+            const x = r * cosTheta;
+            const y = r * sinTheta;
+            const z = dy;
+            
+            vertices.push(x, y, z);
+            uvs.push(j / tubularSegments, i / radialSegments);
+          }
+        }
+        
+        for (let j = 0; j < tubularSegments; j++) {
+          for (let i = 0; i < radialSegments; i++) {
+            const a = j * (radialSegments + 1) + i;
+            const b = j * (radialSegments + 1) + i + 1;
+            const c = (j + 1) * (radialSegments + 1) + i + 1;
+            const d = (j + 1) * (radialSegments + 1) + i;
+            
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+          }
+        }
+        
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+        geo.setIndex(indices);
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      const liningGeo = createInnerGoldLining();
+      const liningMesh = new THREE.Mesh(liningGeo, champagneGoldMaterial);
+      mainRing.add(liningMesh);
+
+      // 3. Volumetric Champagne Gold God-Rays from above
+      const godRayGeo = new THREE.CylinderGeometry(0.15, 1.3, 5.0, 32, 1, true);
+      const godRayMat = new THREE.MeshBasicMaterial({
+        color: 0xF5E6C8,
+        transparent: true,
+        opacity: 0.12,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        depthWrite: false
+      });
+      const godRays = new THREE.Mesh(godRayGeo, godRayMat);
+      godRays.rotation.x = Math.PI / 2; // point vertical
+      scene.add(godRays);
+
+      // 4. Ghostly reflection plane below
+      const floorGeo = new THREE.PlaneGeometry(24, 24);
+      const floorMat = new THREE.MeshStandardMaterial({
+        color: 0x0A0806,
+        roughness: 0.18,
+        metalness: 0.85,
+        transparent: true,
+        opacity: 0.65
+      });
+      const floorPlane = new THREE.Mesh(floorGeo, floorMat);
+      floorPlane.rotation.x = -Math.PI / 2;
+      floorPlane.position.y = -1.62;
+      scene.add(floorPlane);
+
+      // Perfectly synchronized reflected mirror group below the floor
+      const mirrorRing = mainRing.clone();
+      mirrorRing.scale.y = -1; // flip vertically
+      mirrorRing.position.y = -3.24; // reflected position
+      scene.add(mirrorRing);
 
       // Object 2: Particle Field (1,500 gold dust specs)
       const particleCount = isMobile ? 400 : 1500;
@@ -2576,14 +2825,31 @@
         // Gentle Y floating bobbing
         mainRing.position.y = Math.sin(t * 0.8) * 0.06;
 
+        // Perfectly synchronize mirror ring below the floor plane
+        mirrorRing.rotation.x = mainRing.rotation.x;
+        mirrorRing.rotation.y = mainRing.rotation.y;
+        mirrorRing.rotation.z = mainRing.rotation.z;
+        mirrorRing.position.y = -3.24 - mainRing.position.y;
+
         // 2. Slow particle rotation Y
         particleField.rotation.y += 0.0006;
         
-        // Individual particle wave oscillation logic
+        // Circular stardust orbit drift logic
         const posArr = particlesGeo.attributes.position.array;
         for (let i = 0; i < particleCount; i++) {
-          const idx = i * 3 + 1; // Y coordinate
-          posArr[idx] += Math.sin(t + phases[i]) * 0.0015;
+          const idx = i * 3;
+          const x = posArr[idx];
+          const z = posArr[idx + 2];
+          
+          const speed = 0.0006 * (1 + (i % 3));
+          const cosS = Math.cos(speed);
+          const sinS = Math.sin(speed);
+          
+          posArr[idx] = x * cosS - z * sinS;
+          posArr[idx + 2] = x * sinS + z * cosS;
+          
+          // Gentle Y wave oscillation
+          posArr[idx + 1] += Math.sin(t + phases[i]) * 0.0012;
         }
         particlesGeo.attributes.position.needsUpdate = true;
 
@@ -2640,7 +2906,8 @@
 
       // 2. Main twisted ring scales up massive as camera passes through its center
       heroTimeline.to(mainRing.scale, { x: 6.5, y: 6.5, z: 6.5, ease: 'sine.inOut' }, 0);
-      heroTimeline.to(goldMaterial, { opacity: 0, ease: 'power2.in' }, 0);
+      heroTimeline.to(blackGoldMaterial, { opacity: 0, ease: 'power2.in' }, 0);
+      heroTimeline.to(champagneGoldMaterial, { opacity: 0, ease: 'power2.in' }, 0);
 
       // 3. Gold dust particles swirl and zoom past the camera view, simulating a gold galaxy
       heroTimeline.to(particleField.scale, { x: 0.12, y: 0.12, z: 0.12, ease: 'sine.inOut' }, 0);
